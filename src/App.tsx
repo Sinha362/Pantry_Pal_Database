@@ -31,39 +31,40 @@ function App() {
 
   const handleIngredientsChange = (newIngredients: string[]) => {
     setIngredients(newIngredients);
-    // Reset results when ingredients change
     if (showResults && newIngredients.length === 0) {
       setShowResults(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-emerald-50">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-emerald-50">
       <Header />
-      
-      <main className="container mx-auto px-4 py-8">
+
+      {/* Main Content */}
+      <main className="flex-grow container mx-auto px-4 py-8">
         <IngredientInput
           ingredients={ingredients}
           onIngredientsChange={handleIngredientsChange}
           onGoClick={handleGoClick}
           showResults={showResults}
         />
-        
+
         {showResults && (
           <FilterPanel
             filters={filters}
             onFiltersChange={setFilters}
           />
         )}
-        
+
         <RecipeGrid
           recipes={filteredRecipes}
           availableIngredients={ingredients}
           showResults={showResults}
         />
       </main>
-      
-      <footer className="bg-gray-800 text-white py-8 mt-16">
+
+      {/* Sticky Footer */}
+      <footer className="bg-gray-800 text-white py-8">
         <div className="container mx-auto px-4 text-center">
           <p className="text-gray-300">
             &copy; 2025 Pantry Pal. Make the most of what you have - no waste, no shopping trips!
