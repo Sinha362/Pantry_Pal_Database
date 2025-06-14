@@ -1,84 +1,72 @@
 import React from 'react';
-import { Clock, Users, Star, CheckCircle } from 'lucide-react';
+import { Star, CheckCircle, Target } from 'lucide-react';
 import { Recipe } from '../types';
 
 interface RecipeCardProps {
-  recipe: Recipe & { matchPercentage?: number };
+  recipe: Recipe;
   availableIngredients: string[];
   onClick: () => void;
 }
 
 const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, availableIngredients, onClick }) => {
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case 'Easy': return 'text-green-600 bg-green-100';
-      case 'Medium': return 'text-yellow-600 bg-yellow-100';
-      case 'Hard': return 'text-red-600 bg-red-100';
-      default: return 'text-gray-600 bg-gray-100';
-    }
+  const getSimilarityColor = (score: number) => {
+    if (score >= 80) return 'text-green-600 bg-green-100';
+    if (score >= 60) return 'text-yellow-600 bg-yellow-100';
+    return 'text-red-600 bg-red-100';
+  };
+
+  const getSimilarityLabel = (score: number) => {
+    if (score >= 80) return 'Great Match';
+    if (score >= 60) return 'Good Match';
+    return 'Partial Match';
   };
 
   return (
     <div
       onClick={onClick}
-      className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1 overflow-hidden border-2 border-green-100"
+      className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1 overflow-hidden border-2 border-emerald-100"
     >
       <div className="relative">
-        <img
-          src={recipe.image}
-          alt={recipe.name}
-          className="w-full h-48 object-cover"
-        />
+        <div className="w-full h-48 bg-gradient-to-br from-emerald-100 to-teal-100 flex items-center justify-center">
+          <div className="text-center">
+            <Target className="w-16 h-16 text-emerald-600 mx-auto mb-2" />
+            <p className="text-emerald-700 font-medium">{recipe.category}</p>
+          </div>
+        </div>
         <div className="absolute top-3 left-3">
-          <span className="px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 flex items-center gap-1">
+          <span className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${getSimilarityColor(recipe.similarityScore)}`}>
             <CheckCircle className="w-3 h-3" />
-            Perfect Match
+            {getSimilarityLabel(recipe.similarityScore)}
           </span>
         </div>
         <div className="absolute top-3 right-3">
-          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(recipe.difficulty)}`}>
-            {recipe.difficulty}
+          <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+            {recipe.similarityScore}% Match
           </span>
         </div>
       </div>
 
       <div className="p-5">
-        <h3 className="text-xl font-bold text-gray-800 mb-2">{recipe.name}</h3>
-        <p className="text-gray-600 text-sm mb-4 line-clamp-2">{recipe.description}</p>
-
+        <h3 className="text-xl font-bold text-gray-800 mb-2">{recipe.title}</h3>
+        
         <div className="flex items-center gap-4 mb-4 text-sm text-gray-500">
           <div className="flex items-center gap-1">
-            <Clock className="w-4 h-4" />
-            <span>{recipe.cookingTime} min</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <Users className="w-4 h-4" />
-            <span>{recipe.servings} servings</span>
-          </div>
-          <div className="flex items-center gap-1">
             <Star className="w-4 h-4" />
-            <span>{recipe.nutrition.calories} cal</span>
+            <span>{recipe.category}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <span>{recipe.ingredients.length} ingredients</span>
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-1 mb-4">
-          {recipe.tags.slice(0, 3).map((tag, index) => (
-            <span
-              key={index}
-              className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-          <div className="flex items-center gap-2 text-green-700 mb-2">
+        <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3">
+          <div className="flex items-center gap-2 text-emerald-700 mb-2">
             <CheckCircle className="w-4 h-4" />
-            <span className="text-sm font-medium">Uses only your ingredients!</span>
+            <span className="text-sm font-medium">Similarity: {recipe.similarityScore}%</span>
           </div>
-          <div className="text-xs text-green-600">
-            <strong>Ingredients needed:</strong> {recipe.ingredients.join(', ')}
+          <div className="text-xs text-emerald-600">
+            <strong>Ingredients needed:</strong> {recipe.ingredients.slice(0, 3).join(', ')}
+            {recipe.ingredients.length > 3 && ` +${recipe.ingredients.length - 3} more`}
           </div>
         </div>
       </div>

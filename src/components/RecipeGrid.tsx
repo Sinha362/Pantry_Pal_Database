@@ -22,6 +22,7 @@ const RecipeGrid: React.FC<RecipeGridProps> = ({ recipes, availableIngredients, 
     return (
       <div className="flex items-center justify-center py-12">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
+        <p className="ml-4 text-gray-600">Finding recipes for you...</p>
       </div>
     );
   }
@@ -30,17 +31,16 @@ const RecipeGrid: React.FC<RecipeGridProps> = ({ recipes, availableIngredients, 
     return (
       <div className="text-center py-12 bg-white rounded-xl shadow-lg">
         <Lightbulb className="w-16 h-16 text-amber-400 mx-auto mb-4" />
-        <h3 className="text-xl font-semibold text-gray-600 mb-2">No exact matches found</h3>
+        <h3 className="text-xl font-semibold text-gray-600 mb-2">No recipes found</h3>
         <p className="text-gray-500 mb-4">
           {availableIngredients.length === 0 
             ? "Add some ingredients to see what you can make!"
-            : "We couldn't find recipes that use ONLY your ingredients."
+            : "We couldn't find recipes that match your ingredients."
           }
         </p>
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-md mx-auto">
           <p className="text-blue-800 text-sm">
-            <strong>Tip:</strong> Try adding basic ingredients like oil, salt, or butter. 
-            Many simple recipes need just 2-3 ingredients!
+            <strong>Tip:</strong> Try adding more common ingredients or check if your API is properly connected.
           </p>
         </div>
       </div>
@@ -52,10 +52,10 @@ const RecipeGrid: React.FC<RecipeGridProps> = ({ recipes, availableIngredients, 
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
           <ChefHat className="w-7 h-7 text-emerald-600" />
-          Perfect Matches ({recipes.length})
+          Recipe Matches ({recipes.length})
         </h2>
         <p className="text-gray-600">
-          These recipes use ONLY the ingredients you have - no shopping needed! Sorted by cooking time.
+          These recipes match your available ingredients. Sorted by similarity score.
         </p>
       </div>
 

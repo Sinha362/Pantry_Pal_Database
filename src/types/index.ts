@@ -1,27 +1,10 @@
 export interface Recipe {
   id: string;
-  name: string;
-  description: string;
+  title: string;
   ingredients: string[];
   instructions: string[];
-  cookingTime: number; // in minutes
-  servings: number;
-  difficulty: 'Easy' | 'Medium' | 'Hard';
-  dietaryInfo: {
-    vegetarian: boolean;
-    vegan: boolean;
-    glutenFree: boolean;
-    dairyFree: boolean;
-    nutFree: boolean;
-  };
-  nutrition: {
-    calories: number;
-    protein: number;
-    carbs: number;
-    fat: number;
-  };
-  image: string;
-  tags: string[];
+  category: string;
+  similarityScore: number;
 }
 
 export interface PantryItem {
@@ -31,11 +14,5 @@ export interface PantryItem {
 }
 
 export interface FilterOptions {
-  vegetarian: boolean;
-  vegan: boolean;
-  glutenFree: boolean;
-  dairyFree: boolean;
-  nutFree: boolean;
-  maxCookingTime: number;
-  difficulty: string[];
+  category: string;
 }

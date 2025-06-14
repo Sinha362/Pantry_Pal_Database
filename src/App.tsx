@@ -3,36 +3,60 @@ import Header from './components/Header';
 import IngredientInput from './components/IngredientInput';
 import FilterPanel from './components/FilterPanel';
 import RecipeGrid from './components/RecipeGrid';
-import { recipes } from './data/recipes';
 import { filterRecipes } from './utils/recipeUtils';
-import { FilterOptions } from './types';
+import { FilterOptions, Recipe } from './types';
 
 function App() {
   const [ingredients, setIngredients] = useState<string[]>([]);
   const [showResults, setShowResults] = useState(false);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState<FilterOptions>({
-    vegetarian: false,
-    vegan: false,
-    glutenFree: false,
-    dairyFree: false,
-    nutFree: false,
-    maxCookingTime: 120,
-    difficulty: [],
+    category: '',
   });
 
   const filteredRecipes = useMemo(() => {
     if (!showResults) return [];
     return filterRecipes(recipes, ingredients, filters);
-  }, [ingredients, filters, showResults]);
+  }, [recipes, ingredients, filters, showResults]);
+
+  const fetchRecipes = async (ingredientsList: string[]) => {
+    if (ingredientsList.length === 0) return;
+    
+    setLoading(true);
+    try {
+      // TODO: Replace with your actual API endpoint
+      // const response = await fetch('/api/recipes', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({ ingredients: ingredientsList }),
+      // });
+      // const data = await response.json();
+      // setRecipes(data.recipes || []);
+      
+      // Placeholder for API integration - remove this when implementing real API
+      console.log('API call would be made with ingredients:', ingredientsList);
+      setRecipes([]); // Empty array until API is connected
+    } catch (error) {
+      console.error('Error fetching recipes:', error);
+      setRecipes([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleGoClick = () => {
     setShowResults(true);
+    fetchRecipes(ingredients);
   };
 
   const handleIngredientsChange = (newIngredients: string[]) => {
     setIngredients(newIngredients);
     if (showResults && newIngredients.length === 0) {
       setShowResults(false);
+      setRecipes([]);
     }
   };
 
@@ -60,6 +84,7 @@ function App() {
           recipes={filteredRecipes}
           availableIngredients={ingredients}
           showResults={showResults}
+          loading={loading}
         />
       </main>
 

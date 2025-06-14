@@ -1,5 +1,5 @@
 import React from 'react';
-import { Filter, Clock, Star } from 'lucide-react';
+import { Filter, Tag } from 'lucide-react';
 import { FilterOptions } from '../types';
 
 interface FilterPanelProps {
@@ -8,19 +8,27 @@ interface FilterPanelProps {
 }
 
 const FilterPanel: React.FC<FilterPanelProps> = ({ filters, onFiltersChange }) => {
-  const updateFilter = (key: keyof FilterOptions, value: any) => {
+  const updateFilter = (key: keyof FilterOptions, value: string) => {
     onFiltersChange({
       ...filters,
       [key]: value,
     });
   };
 
-  const toggleDifficulty = (difficulty: string) => {
-    const newDifficulties = filters.difficulty.includes(difficulty)
-      ? filters.difficulty.filter(d => d !== difficulty)
-      : [...filters.difficulty, difficulty];
-    updateFilter('difficulty', newDifficulties);
-  };
+  // Common recipe categories - you can modify these based on your backend categories
+  const categories = [
+    'All Categories',
+    'Breakfast',
+    'Lunch',
+    'Dinner',
+    'Snack',
+    'Dessert',
+    'Appetizer',
+    'Side Dish',
+    'Soup',
+    'Salad',
+    'Beverage'
+  ];
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
@@ -29,74 +37,23 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters, onFiltersChange }) =
         Filters
       </h2>
 
-      <div className="grid md:grid-cols-3 gap-6">
-        {/* Dietary Preferences */}
-        <div>
-          <h3 className="font-semibold text-gray-700 mb-3">Dietary Preferences</h3>
-          <div className="space-y-2">
-            {[
-              { key: 'vegetarian', label: 'Vegetarian' },
-              { key: 'vegan', label: 'Vegan' },
-              { key: 'glutenFree', label: 'Gluten-Free' },
-              { key: 'dairyFree', label: 'Dairy-Free' },
-              { key: 'nutFree', label: 'Nut-Free' },
-            ].map(({ key, label }) => (
-              <label key={key} className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={filters[key as keyof FilterOptions] as boolean}
-                  onChange={(e) => updateFilter(key as keyof FilterOptions, e.target.checked)}
-                  className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
-                />
-                <span className="text-sm text-gray-700">{label}</span>
-              </label>
-            ))}
-          </div>
-        </div>
-
-        {/* Cooking Time */}
+      <div className="max-w-md">
         <div>
           <h3 className="font-semibold text-gray-700 mb-3 flex items-center gap-1">
-            <Clock className="w-4 h-4" />
-            Max Cooking Time
+            <Tag className="w-4 h-4" />
+            Category
           </h3>
-          <div className="space-y-2">
-            <input
-              type="range"
-              min="10"
-              max="120"
-              step="5"
-              value={filters.maxCookingTime}
-              onChange={(e) => updateFilter('maxCookingTime', parseInt(e.target.value))}
-              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
-            />
-            <div className="flex justify-between text-xs text-gray-500">
-              <span>10 min</span>
-              <span className="font-medium text-blue-600">{filters.maxCookingTime} min</span>
-              <span>2 hours</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Difficulty */}
-        <div>
-          <h3 className="font-semibold text-gray-700 mb-3 flex items-center gap-1">
-            <Star className="w-4 h-4" />
-            Difficulty
-          </h3>
-          <div className="space-y-2">
-            {['Easy', 'Medium', 'Hard'].map((difficulty) => (
-              <label key={difficulty} className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={filters.difficulty.includes(difficulty)}
-                  onChange={() => toggleDifficulty(difficulty)}
-                  className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
-                />
-                <span className="text-sm text-gray-700">{difficulty}</span>
-              </label>
+          <select
+            value={filters.category}
+            onChange={(e) => updateFilter('category', e.target.value === 'All Categories' ? '' : e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+          >
+            {categories.map((category) => (
+              <option key={category} value={category === 'All Categories' ? '' : category}>
+                {category}
+              </option>
             ))}
-          </div>
+          </select>
         </div>
       </div>
     </div>
