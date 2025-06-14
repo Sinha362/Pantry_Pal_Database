@@ -35,7 +35,7 @@ function App() {
 
       console.log('Sending request to backend:', requestBody);
 
-      const response = await fetch('https://Mlboy23-pantrypal-backend.hf.space/search', {
+      const response = await fetch('https://mlboy23-pantrypal-backend.hf.space/search', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
