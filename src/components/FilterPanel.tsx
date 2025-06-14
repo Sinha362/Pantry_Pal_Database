@@ -19,7 +19,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters, onFiltersChange }) =
   const categories = [
     'All Categories',
     'Breakfast',
-    'Lunch',
+    'Lunch', 
     'Dinner',
     'Snack',
     'Dessert',
@@ -27,7 +27,10 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters, onFiltersChange }) =
     'Side Dish',
     'Soup',
     'Salad',
-    'Beverage'
+    'Beverage',
+    'Main Course',
+    'Vegetarian',
+    'Vegan'
   ];
 
   return (
@@ -46,7 +49,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters, onFiltersChange }) =
           <select
             value={filters.category}
             onChange={(e) => updateFilter('category', e.target.value === 'All Categories' ? '' : e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors bg-white"
           >
             {categories.map((category) => (
               <option key={category} value={category === 'All Categories' ? '' : category}>
@@ -54,6 +57,9 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters, onFiltersChange }) =
               </option>
             ))}
           </select>
+          <p className="text-xs text-gray-500 mt-1">
+            Filter recipes by category. Changes will automatically refresh results.
+          </p>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChefHat, Lightbulb } from 'lucide-react';
+import { ChefHat, Lightbulb, AlertTriangle } from 'lucide-react';
 import { Recipe } from '../types';
 import RecipeCard from './RecipeCard';
 import RecipeModal from './RecipeModal';
@@ -20,9 +20,10 @@ const RecipeGrid: React.FC<RecipeGridProps> = ({ recipes, availableIngredients, 
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
-        <p className="ml-4 text-gray-600">Finding recipes for you...</p>
+      <div className="flex flex-col items-center justify-center py-12">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mb-4"></div>
+        <p className="text-gray-600 text-lg">Finding recipes for you...</p>
+        <p className="text-gray-500 text-sm mt-2">Searching our database for the best matches</p>
       </div>
     );
   }
@@ -30,18 +31,23 @@ const RecipeGrid: React.FC<RecipeGridProps> = ({ recipes, availableIngredients, 
   if (recipes.length === 0) {
     return (
       <div className="text-center py-12 bg-white rounded-xl shadow-lg">
-        <Lightbulb className="w-16 h-16 text-amber-400 mx-auto mb-4" />
+        <AlertTriangle className="w-16 h-16 text-amber-400 mx-auto mb-4" />
         <h3 className="text-xl font-semibold text-gray-600 mb-2">No recipes found</h3>
         <p className="text-gray-500 mb-4">
           {availableIngredients.length === 0 
             ? "Add some ingredients to see what you can make!"
-            : "We couldn't find recipes that match your ingredients."
+            : "We couldn't find recipes that match your ingredients and filters."
           }
         </p>
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-md mx-auto">
           <p className="text-blue-800 text-sm">
-            <strong>Tip:</strong> Try adding more common ingredients or check if your API is properly connected.
+            <strong>Tips:</strong>
           </p>
+          <ul className="text-blue-700 text-sm mt-2 text-left">
+            <li>• Try adding more common ingredients</li>
+            <li>• Remove category filters to see more results</li>
+            <li>• Check your spelling</li>
+          </ul>
         </div>
       </div>
     );
