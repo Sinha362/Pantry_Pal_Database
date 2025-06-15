@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { X, Tag, CheckCircle, AlertCircle, Target } from 'lucide-react';
 import { Recipe } from '../types';
 import { getMissingIngredients } from '../utils/recipeUtils';
@@ -10,12 +10,17 @@ interface RecipeModalProps {
 }
 
 const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, availableIngredients, onClose }) => {
+  const [imageError, setImageError] = useState(false);
   const missingIngredients = getMissingIngredients(recipe, availableIngredients);
 
   const getSimilarityColor = (score: number) => {
     if (score >= 80) return 'text-green-600 bg-green-100';
     if (score >= 60) return 'text-yellow-600 bg-yellow-100';
     return 'text-red-600 bg-red-100';
+  };
+
+  const handleImageError = () => {
+    setImageError(true);
   };
 
   return (
@@ -34,12 +39,21 @@ const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, availableIngredients,
         <div className="p-6">
           <div className="grid md:grid-cols-2 gap-6 mb-6">
             <div>
-              <div className="w-full h-64 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-lg flex items-center justify-center">
-                <div className="text-center">
-                  <Target className="w-20 h-20 text-emerald-600 mx-auto mb-3" />
-                  <p className="text-emerald-700 font-medium text-lg">{recipe.category}</p>
+              {recipe.image && !imageError ? (
+                <img
+                  src={recipe.image}
+                  alt={recipe.title}
+                  onError={handleImageError}
+                  className="w-full h-64 object-cover rounded-lg"
+                />
+              ) : (
+                <div className="w-full h-64 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-lg flex items-center justify-center">
+                  <div className="text-center">
+                    <Target className="w-20 h-20 text-emerald-600 mx-auto mb-3" />
+                    <p className="text-emerald-700 font-medium text-lg">{recipe.category}</p>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
             
             <div className="space-y-4">

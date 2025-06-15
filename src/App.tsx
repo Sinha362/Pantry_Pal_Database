@@ -52,9 +52,27 @@ function App() {
 
       // Handle the response structure - assuming the API returns recipes directly or in a recipes field
       const recipesData = Array.isArray(data) ? data : (data.results || []);
-      setRecipes(recipesData);
       
-      if (recipesData.length === 0) {
+      // Map API response to our Recipe interface
+      const mappedRecipes: Recipe[] = recipesData.map((recipe: any) => ({
+        id: recipe.id || String(Math.random()),
+        title: recipe.title || 'Untitled Recipe',
+        ingredients: Array.isArray(recipe.ingredients) ? recipe.ingredients : [],
+        instructions: Array.isArray(recipe.instructions) ? recipe.instructions : [],
+        category: recipe.category || 'Uncategorized',
+        // Handle both snake_case and camelCase for similarity score
+        similarityScore: typeof recipe.similarity_score === 'number' 
+          ? recipe.similarity_score 
+          : typeof recipe.similarityScore === 'number' 
+            ? recipe.similarityScore 
+            : 0,
+        image: recipe.image || ''
+      }));
+
+      console.log('Mapped recipes:', mappedRecipes);
+      setRecipes(mappedRecipes);
+      
+      if (mappedRecipes.length === 0) {
         setError('No recipes found for your ingredients and filters.');
       }
     } catch (error) {

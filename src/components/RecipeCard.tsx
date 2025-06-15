@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Star, CheckCircle, Target } from 'lucide-react';
 import { Recipe } from '../types';
 
@@ -9,6 +9,8 @@ interface RecipeCardProps {
 }
 
 const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, availableIngredients, onClick }) => {
+  const [imageError, setImageError] = useState(false);
+
   const getSimilarityColor = (score: number) => {
     if (score >= 80) return 'text-green-600 bg-green-100';
     if (score >= 60) return 'text-yellow-600 bg-yellow-100';
@@ -21,18 +23,31 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, availableIngredients, o
     return 'Partial Match';
   };
 
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
   return (
     <div
       onClick={onClick}
       className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1 overflow-hidden border-2 border-emerald-100"
     >
       <div className="relative">
-        <div className="w-full h-48 bg-gradient-to-br from-emerald-100 to-teal-100 flex items-center justify-center">
-          <div className="text-center">
-            <Target className="w-16 h-16 text-emerald-600 mx-auto mb-2" />
-            <p className="text-emerald-700 font-medium">{recipe.category}</p>
+        {recipe.image && !imageError ? (
+          <img
+            src={recipe.image}
+            alt={recipe.title}
+            onError={handleImageError}
+            className="w-full h-48 object-cover"
+          />
+        ) : (
+          <div className="w-full h-48 bg-gradient-to-br from-emerald-100 to-teal-100 flex items-center justify-center">
+            <div className="text-center">
+              <Target className="w-16 h-16 text-emerald-600 mx-auto mb-2" />
+              <p className="text-emerald-700 font-medium">{recipe.category}</p>
+            </div>
           </div>
-        </div>
+        )}
         <div className="absolute top-3 left-3">
           <span className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${getSimilarityColor(recipe.similarityScore)}`}>
             <CheckCircle className="w-3 h-3" />

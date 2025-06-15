@@ -5,6 +5,7 @@ export interface Recipe {
   instructions: string[];
   category: string;
   similarityScore: number;
+  image: string;
 }
 
 export interface PantryItem {
