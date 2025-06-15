@@ -38,6 +38,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, availableIngredients, o
             src={recipe.image}
             alt={recipe.title}
             onError={handleImageError}
+            loading="lazy"
             className="w-full h-48 object-cover"
           />
         ) : (

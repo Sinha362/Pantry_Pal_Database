@@ -44,6 +44,7 @@ const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, availableIngredients,
                   src={recipe.image}
                   alt={recipe.title}
                   onError={handleImageError}
+                  loading="lazy"
                   className="w-full h-64 object-cover rounded-lg"
                 />
               ) : (
