@@ -60,16 +60,18 @@ function App() {
         ingredients: Array.isArray(recipe.ingredients) ? recipe.ingredients : [],
         instructions: Array.isArray(recipe.instructions) ? recipe.instructions : [],
         category: recipe.category || 'Uncategorized',
-        // Handle both snake_case and camelCase for similarity score
-        similarityScore: typeof recipe.similarity_score === 'number' 
-          ? recipe.similarity_score 
-          : typeof recipe.similarityScore === 'number' 
-            ? recipe.similarityScore 
-            : 0,
+        // Fix: Check for 'similarity' field and convert decimal to percentage
+        similarityScore: typeof recipe.similarity === 'number' 
+          ? Math.round(recipe.similarity * 100) // Convert 0.547 to 55%
+          : typeof recipe.similarity_score === 'number' 
+            ? recipe.similarity_score 
+            : typeof recipe.similarityScore === 'number' 
+              ? recipe.similarityScore 
+              : 0,
         image: recipe.image || ''
       }));
 
-      console.log('Mapped recipes:', mappedRecipes);
+      console.log('Mapped recipes with similarity scores:', mappedRecipes);
       setRecipes(mappedRecipes);
       
       if (mappedRecipes.length === 0) {
