@@ -3,7 +3,7 @@
 PantryPal is a smart recipe recommendation web app that helps you cook with what you already have.  
 Just enter your available ingredients, and PantryPal will suggest the best recipes using AI-powered similarity matching.
 
-![PantryPal Screenshot](./screenshot.png)
+![PantryPal Screenshot](./Screenshot.png)
 
 ---
 
