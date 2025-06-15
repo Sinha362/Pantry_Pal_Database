@@ -51,7 +51,7 @@ function App() {
       console.log('Received response from backend:', data);
 
       // Handle the response structure - assuming the API returns recipes directly or in a recipes field
-      const recipesData = Array.isArray(data) ? data : (data.recipes || []);
+      const recipesData = Array.isArray(data) ? data : (data.results || []);
       setRecipes(recipesData);
       
       if (recipesData.length === 0) {
