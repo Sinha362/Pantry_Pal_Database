@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useMemo } from 'react';
+/* eslint-enable no-unused-vars */
 import Header from './components/Header';
 import IngredientInput from './components/IngredientInput';
 import FilterPanel from './components/FilterPanel';
@@ -21,16 +23,16 @@ function App() {
     return filterRecipes(recipes, ingredients, filters);
   }, [recipes, ingredients, filters, showResults]);
 
-  const fetchRecipes = async (ingredientsList: string[]) => {
+  const fetchRecipes = async (ingredientsList: string[], updatedFilters: FilterOptions = filters) => {
     if (ingredientsList.length === 0) return;
-    
+
     setLoading(true);
     setError(null);
-    
+
     try {
       const requestBody = {
         ingredients: ingredientsList,
-        filters: filters.category ? { category: filters.category } : {}
+        filters: updatedFilters.category ? { category: updatedFilters.category } : {}
       };
 
       console.log('Sending request to backend:', requestBody);
@@ -50,19 +52,16 @@ function App() {
       const data = await response.json();
       console.log('Received response from backend:', data);
 
-      // Handle the response structure - assuming the API returns recipes directly or in a recipes field
       const recipesData = Array.isArray(data) ? data : (data.results || []);
-      
-      // Map API response to our Recipe interface
+
       const mappedRecipes: Recipe[] = recipesData.map((recipe: any) => ({
         id: recipe.id || String(Math.random()),
         title: recipe.title || 'Untitled Recipe',
         ingredients: Array.isArray(recipe.ingredients) ? recipe.ingredients : [],
-        instructions: Array.isArray(recipe.instructions) ? recipe.instructions : [],
+        instructions: typeof recipe.instructions === 'string' ? recipe.instructions.split('\r\n') : recipe.instructions,
         category: recipe.category || 'Uncategorized',
-        // Fix: Check for 'similarity' field and convert decimal to percentage
         similarityScore: typeof recipe.similarity === 'number' 
-          ? Math.round(recipe.similarity * 100) // Convert 0.547 to 55%
+          ? Math.round(recipe.similarity * 100) 
           : typeof recipe.similarity_score === 'number' 
             ? recipe.similarity_score 
             : typeof recipe.similarityScore === 'number' 
@@ -73,7 +72,7 @@ function App() {
 
       console.log('Mapped recipes with similarity scores:', mappedRecipes);
       setRecipes(mappedRecipes);
-      
+
       if (mappedRecipes.length === 0) {
         setError('No recipes found for your ingredients and filters.');
       }
@@ -102,9 +101,8 @@ function App() {
 
   const handleFiltersChange = (newFilters: FilterOptions) => {
     setFilters(newFilters);
-    // Re-fetch recipes when filters change if we're already showing results
     if (showResults && ingredients.length > 0) {
-      fetchRecipes(ingredients);
+      fetchRecipes(ingredients, newFilters);
     }
   };
 

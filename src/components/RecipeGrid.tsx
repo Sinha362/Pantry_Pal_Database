@@ -14,6 +14,8 @@ interface RecipeGridProps {
 const RecipeGrid: React.FC<RecipeGridProps> = ({ recipes, availableIngredients, loading, showResults }) => {
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
 
+  const filteredRecipes = recipes.filter(recipe => recipe.similarityScore >= 50);
+
   if (!showResults) {
     return null;
   }
@@ -28,7 +30,7 @@ const RecipeGrid: React.FC<RecipeGridProps> = ({ recipes, availableIngredients, 
     );
   }
 
-  if (recipes.length === 0) {
+  if (filteredRecipes.length === 0) {
     return (
       <div className="text-center py-12 bg-white rounded-xl shadow-lg">
         <AlertTriangle className="w-16 h-16 text-amber-400 mx-auto mb-4" />
@@ -58,7 +60,7 @@ const RecipeGrid: React.FC<RecipeGridProps> = ({ recipes, availableIngredients, 
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
           <ChefHat className="w-7 h-7 text-emerald-600" />
-          Recipe Matches ({recipes.length})
+          Recipe Matches ({filteredRecipes.length})
         </h2>
         <p className="text-gray-600">
           These recipes match your available ingredients. Sorted by similarity score.
@@ -66,7 +68,7 @@ const RecipeGrid: React.FC<RecipeGridProps> = ({ recipes, availableIngredients, 
       </div>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {recipes.map((recipe) => (
+        {filteredRecipes.map((recipe) => (
           <RecipeCard
             key={recipe.id}
             recipe={recipe}

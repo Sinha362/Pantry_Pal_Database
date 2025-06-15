@@ -23,6 +23,10 @@ const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, availableIngredients,
     setImageError(true);
   };
 
+  const instructions = Array.isArray(recipe.instructions)
+    ? recipe.instructions.filter((step: string) => step.trim() !== '' && isNaN(Number(step.trim())) && !/^STEP \d+$/i.test(step.trim()))
+    : recipe.instructions.split('\r\n').filter((step: string) => step.trim() !== '' && isNaN(Number(step.trim())) && !/^STEP \d+$/i.test(step.trim()));
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
@@ -118,16 +122,20 @@ const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, availableIngredients,
 
             <div>
               <h3 className="text-xl font-bold text-gray-800 mb-4">Instructions</h3>
-              <ol className="space-y-3">
-                {recipe.instructions.map((instruction, index) => (
-                  <li key={index} className="flex gap-3">
-                    <span className="flex-shrink-0 w-6 h-6 bg-emerald-600 text-white text-sm rounded-full flex items-center justify-center font-medium">
-                      {index + 1}
-                    </span>
-                    <p className="text-gray-700">{instruction}</p>
-                  </li>
-                ))}
-              </ol>
+              {instructions.length > 0 ? (
+                <ol className="space-y-4">
+                  {instructions.map((instruction: string, index: number) => (
+                    <li key={index} className="flex gap-4 items-start">
+                      <span className="flex-shrink-0 w-8 h-8 bg-emerald-600 text-white text-lg rounded-full flex items-center justify-center font-bold">
+                        {index + 1}
+                      </span>
+                      <p className="text-gray-700 leading-relaxed">{instruction}</p>
+                    </li>
+                  ))}
+                </ol>
+              ) : (
+                <p className="text-gray-500">No instructions available for this recipe.</p>
+              )}
             </div>
           </div>
         </div>

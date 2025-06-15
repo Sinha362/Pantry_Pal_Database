@@ -2,7 +2,7 @@ export interface Recipe {
   id: string;
   title: string;
   ingredients: string[];
-  instructions: string[];
+  instructions: string | string[];
   category: string;
   similarityScore: number;
   image: string;
