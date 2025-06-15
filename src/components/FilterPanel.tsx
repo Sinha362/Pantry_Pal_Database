@@ -15,22 +15,23 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters, onFiltersChange }) =
     });
   };
 
-  // Common recipe categories - you can modify these based on your backend categories
+  // Updated categories based on your backend API
   const categories = [
     'All Categories',
-    'Breakfast',
-    'Lunch', 
-    'Dinner',
-    'Snack',
-    'Dessert',
-    'Appetizer',
-    'Side Dish',
-    'Soup',
-    'Salad',
-    'Beverage',
-    'Main Course',
-    'Vegetarian',
-    'Vegan'
+    'beef',
+    'breakfast',
+    'chicken',
+    'dessert',
+    'goat',
+    'lamb',
+    'miscellaneous',
+    'pasta',
+    'pork',
+    'seafood',
+    'side',
+    'starter',
+    'vegan',
+    'vegetarian'
   ];
 
   return (
@@ -49,11 +50,11 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters, onFiltersChange }) =
           <select
             value={filters.category}
             onChange={(e) => updateFilter('category', e.target.value === 'All Categories' ? '' : e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors bg-white"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors bg-white capitalize"
           >
             {categories.map((category) => (
-              <option key={category} value={category === 'All Categories' ? '' : category}>
-                {category}
+              <option key={category} value={category === 'All Categories' ? '' : category} className="capitalize">
+                {category === 'All Categories' ? category : category.charAt(0).toUpperCase() + category.slice(1)}
               </option>
             ))}
           </select>
