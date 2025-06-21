@@ -37,14 +37,16 @@ const IngredientInput: React.FC<IngredientInputProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-      <h2 className="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
-        <Search className="w-6 h-6 text-emerald-600" />
-        What ingredients do you have?
-      </h2>
-      <p className="text-gray-600 mb-4">
-        Add your ingredients and we'll find recipes that match what you have available!
-      </p>
+    <div className="bg-white rounded-3xl shadow-lg p-6 mb-8 max-w-3xl mx-auto">
+      <div className="flex flex-col items-center text-center mb-6">
+        <h2 className="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
+          <Search className="w-6 h-6 text-emerald-600" />
+          What ingredients do you have?
+        </h2>
+        <p className="text-gray-600 mb-0 max-w-xl">
+          Add your ingredients and we'll find recipes that match what you have available!
+        </p>
+      </div>
       
       <form onSubmit={handleSubmit} className="relative mb-4">
         <div className="flex gap-2">

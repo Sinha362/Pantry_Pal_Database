@@ -35,11 +35,13 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters, onFiltersChange }) =
   ];
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-      <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-        <Filter className="w-5 h-5 text-blue-600" />
-        Filters
-      </h2>
+    <div className="bg-white rounded-3xl shadow-lg p-6 mb-8 max-w-3xl mx-auto">
+      <div className="flex flex-col items-center text-center mb-6">
+        <h2 className="text-xl font-bold text-gray-800 mb-0 flex items-center gap-2">
+          <Filter className="w-5 h-5 text-blue-600" />
+          Filters
+        </h2>
+      </div>
 
       <div className="max-w-md">
         <div>
