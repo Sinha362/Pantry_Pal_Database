@@ -1,12 +1,11 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 /* eslint-enable no-unused-vars */
 import { motion, AnimatePresence } from 'framer-motion';
 import Header from './components/Header';
 import IngredientInput from './components/IngredientInput';
 import FilterPanel from './components/FilterPanel';
 import RecipeGrid from './components/RecipeGrid';
-import { filterRecipes } from './utils/recipeUtils';
 import { FilterOptions, Recipe } from './types';
 import { ChefHat, X } from 'lucide-react';
 
@@ -20,15 +19,17 @@ function App() {
   const [showHero, setShowHero] = useState(true);
   const [showOverlay, setShowOverlay] = useState(false);
 
-  const filteredRecipes = useMemo(() => {
-    if (!showResults) return [];
-    return filterRecipes(recipes, ingredients, filters);
-  }, [recipes, ingredients, filters, showResults]);
-
   useEffect(() => {
     const timer = setTimeout(() => setShowHero(false), 2500);
     return () => clearTimeout(timer);
   }, []);
+
+  const ingredientMatchRatio = (recipeIngredients: string[], userIngredients: string[]) => {
+    const matched = recipeIngredients.filter(r =>
+      userIngredients.some(u => r.toLowerCase().includes(u.toLowerCase()))
+    ).length;
+    return matched / recipeIngredients.length;
+  };
 
   const fetchRecipes = async (ingredientsList: string[], updatedFilters: FilterOptions = filters) => {
     if (ingredientsList.length === 0) return;
@@ -41,6 +42,8 @@ function App() {
         filters: updatedFilters.category ? { category: updatedFilters.category } : {},
       };
 
+      console.log('Sending request to backend:', requestBody);
+
       const response = await fetch('https://Mlboy23-pantrypal-backend.hf.space/search', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -50,6 +53,8 @@ function App() {
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
       const data = await response.json();
+      console.log('Received response from backend:', data);
+
       const recipesData = Array.isArray(data) ? data : data.results || [];
 
       const mappedRecipes: Recipe[] = recipesData.map((recipe: any) => ({
@@ -64,9 +69,11 @@ function App() {
         image: recipe.image || ''
       }));
 
-      setRecipes(mappedRecipes);
+      const filteredByMatch = mappedRecipes.filter(r => ingredientMatchRatio(r.ingredients, ingredientsList) >= 0.35);
+
+      setRecipes(filteredByMatch);
       setShowOverlay(true);
-      if (mappedRecipes.length === 0) setError('No recipes found for your ingredients and filters.');
+      if (filteredByMatch.length === 0) setError('No recipes found with sufficient ingredient matches.');
     } catch (error) {
       console.error('Error fetching recipes:', error);
       setError(error instanceof Error ? error.message : 'Failed to fetch recipes. Please try again.');
@@ -92,6 +99,9 @@ function App() {
 
   const handleFiltersChange = (newFilters: FilterOptions) => {
     setFilters(newFilters);
+    if (showResults && ingredients.length > 0) {
+      fetchRecipes(ingredients, newFilters);
+    }
   };
 
   return (
@@ -173,36 +183,33 @@ function App() {
           </footer>
 
           <AnimatePresence>
-                {showOverlay && (
-                  <motion.div
-                    key="overlay"
-                    initial={{ y: 100, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: 100, opacity: 0 }}
-                    transition={{ type: 'spring', stiffness: 70, damping: 15 }}
-                    className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm px-4"
-                  >
+            {showOverlay && (
+              <motion.div
+                key="overlay"
+                initial={{ y: 100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 100, opacity: 0 }}
+                transition={{ type: 'spring', stiffness: 70, damping: 15 }}
+                className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm px-4"
+              >
                 <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-5xl w-full max-h-[90vh] overflow-y-auto border border-emerald-200 relative">
                   <button
                     className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
                     onClick={() => setShowOverlay(false)}
-                 >
+                  >
                     <X className="w-6 h-6" />
                   </button>
 
-                  
-
                   <RecipeGrid
-                    recipes={filteredRecipes}
+                    recipes={recipes}
                     availableIngredients={ingredients}
                     showResults={showResults}
                     loading={loading}
                   />
-                    </div>
-                    </motion.div>
-                    )}
-            </AnimatePresence>
-
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </>
       )}
     </div>
