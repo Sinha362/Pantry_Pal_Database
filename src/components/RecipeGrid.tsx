@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChefHat, Lightbulb, AlertTriangle } from 'lucide-react';
 import { Recipe } from '../types';
 import RecipeCard from './RecipeCard';
 import RecipeModal from './RecipeModal';
+import { useAuth } from '../context/AuthContext';
+import { fetchBookmarkedRecipeIds, addBookmark, removeBookmark } from '../lib/supabase';
 
 interface RecipeGridProps {
   recipes: Recipe[];
@@ -13,8 +15,71 @@ interface RecipeGridProps {
 
 const RecipeGrid: React.FC<RecipeGridProps> = ({ recipes, availableIngredients, loading, showResults }) => {
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
+  const [bookmarkedRecipeIds, setBookmarkedRecipeIds] = useState<Set<string>>(new Set());
+  const [bookmarkLoading, setBookmarkLoading] = useState<Set<string>>(new Set());
+  const { user } = useAuth();
 
   const filteredRecipes = recipes.filter(recipe => recipe.similarityScore >= 50);
+
+  // Fetch bookmarked recipe IDs when user changes
+  useEffect(() => {
+    const loadBookmarkedRecipes = async () => {
+      if (!user?.id) return;
+
+      try {
+        const { data, error } = await fetchBookmarkedRecipeIds(user.id);
+        if (error) {
+          console.error('Error fetching bookmarked recipes:', error);
+        } else if (data) {
+          setBookmarkedRecipeIds(new Set(data));
+        }
+      } catch (error) {
+        console.error('Error fetching bookmarked recipes:', error);
+      }
+    };
+
+    loadBookmarkedRecipes();
+  }, [user?.id]);
+
+  const handleBookmarkToggle = async (recipe: Recipe, isCurrentlyBookmarked: boolean) => {
+    if (!user?.id) return;
+
+    // Add recipe to loading state
+    setBookmarkLoading(prev => new Set(prev).add(recipe.id));
+
+    try {
+      if (isCurrentlyBookmarked) {
+        // Remove bookmark
+        const { error } = await removeBookmark(user.id, recipe.id);
+        if (error) {
+          console.error('Error removing bookmark:', error);
+        } else {
+          setBookmarkedRecipeIds(prev => {
+            const newSet = new Set(prev);
+            newSet.delete(recipe.id);
+            return newSet;
+          });
+        }
+      } else {
+        // Add bookmark
+        const { error } = await addBookmark(user.id, recipe);
+        if (error) {
+          console.error('Error adding bookmark:', error);
+        } else {
+          setBookmarkedRecipeIds(prev => new Set(prev).add(recipe.id));
+        }
+      }
+    } catch (error) {
+      console.error('Error toggling bookmark:', error);
+    } finally {
+      // Remove recipe from loading state
+      setBookmarkLoading(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(recipe.id);
+        return newSet;
+      });
+    }
+  };
 
   if (!showResults) {
     return null;
@@ -68,14 +133,21 @@ const RecipeGrid: React.FC<RecipeGridProps> = ({ recipes, availableIngredients, 
       </div>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredRecipes.map((recipe) => (
-          <RecipeCard
-            key={recipe.id}
-            recipe={recipe}
-            availableIngredients={availableIngredients}
-            onClick={() => setSelectedRecipe(recipe)}
-          />
-        ))}
+        {filteredRecipes.map((recipe) => {
+          const isBookmarked = bookmarkedRecipeIds.has(recipe.id);
+          const isLoading = bookmarkLoading.has(recipe.id);
+          
+          return (
+            <RecipeCard
+              key={recipe.id}
+              recipe={recipe}
+              availableIngredients={availableIngredients}
+              onClick={() => setSelectedRecipe(recipe)}
+              isBookmarked={isBookmarked}
+              onBookmarkToggle={handleBookmarkToggle}
+            />
+          );
+        })}
       </div>
 
       {selectedRecipe && (
@@ -83,6 +155,8 @@ const RecipeGrid: React.FC<RecipeGridProps> = ({ recipes, availableIngredients, 
           recipe={selectedRecipe}
           availableIngredients={availableIngredients}
           onClose={() => setSelectedRecipe(null)}
+          isBookmarked={bookmarkedRecipeIds.has(selectedRecipe.id)}
+          onBookmarkToggle={handleBookmarkToggle}
         />
       )}
     </>

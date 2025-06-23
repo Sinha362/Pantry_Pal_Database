@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Tag, CheckCircle, AlertCircle, Target } from 'lucide-react';
+import { X, Tag, CheckCircle, AlertCircle, Target, Bookmark, BookmarkCheck } from 'lucide-react';
 import { Recipe } from '../types';
 import { getMissingIngredients } from '../utils/recipeUtils';
 
@@ -7,9 +7,17 @@ interface RecipeModalProps {
   recipe: Recipe;
   availableIngredients: string[];
   onClose: () => void;
+  isBookmarked: boolean;
+  onBookmarkToggle: (recipe: Recipe, isBookmarked: boolean) => void;
 }
 
-const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, availableIngredients, onClose }) => {
+const RecipeModal: React.FC<RecipeModalProps> = ({ 
+  recipe, 
+  availableIngredients, 
+  onClose, 
+  isBookmarked, 
+  onBookmarkToggle 
+}) => {
   const [imageError, setImageError] = useState(false);
   const missingIngredients = getMissingIngredients(recipe, availableIngredients);
 
@@ -23,6 +31,10 @@ const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, availableIngredients,
     setImageError(true);
   };
 
+  const handleBookmarkClick = () => {
+    onBookmarkToggle(recipe, isBookmarked);
+  };
+
   const instructions = Array.isArray(recipe.instructions)
     ? recipe.instructions.filter((step: string) => step.trim() !== '' && isNaN(Number(step.trim())) && !/^STEP \d+$/i.test(step.trim()))
     : recipe.instructions.split('\r\n').filter((step: string) => step.trim() !== '' && isNaN(Number(step.trim())) && !/^STEP \d+$/i.test(step.trim()));
@@ -32,12 +44,28 @@ const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, availableIngredients,
       <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
           <h2 className="text-2xl font-bold text-gray-800">{recipe.title}</h2>
-          <button
-            onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-          >
-            <X className="w-6 h-6" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleBookmarkClick}
+              className={`p-2 rounded-full transition-all duration-200 ${
+                isBookmarked 
+                  ? 'bg-yellow-500 text-white hover:bg-yellow-600' 
+                  : 'bg-gray-100 text-gray-600 hover:bg-yellow-100 hover:text-yellow-600'
+              }`}
+            >
+              {isBookmarked ? (
+                <BookmarkCheck className="w-5 h-5" />
+              ) : (
+                <Bookmark className="w-5 h-5" />
+              )}
+            </button>
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
         </div>
 
         <div className="p-6">
@@ -82,6 +110,18 @@ const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, availableIngredients,
                   This recipe matches {recipe.similarityScore}% of your available ingredients.
                 </p>
               </div>
+
+              {isBookmarked && (
+                <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                  <div className="flex items-center gap-2 text-yellow-800">
+                    <BookmarkCheck className="w-4 h-4" />
+                    <span className="text-sm font-medium">Recipe Bookmarked</span>
+                  </div>
+                  <p className="text-xs text-yellow-700 mt-1">
+                    This recipe has been saved to your bookmarks
+                  </p>
+                </div>
+              )}
             </div>
           </div>
 

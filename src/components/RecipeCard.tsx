@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
-import { Star, CheckCircle, Target } from 'lucide-react';
+import { Star, CheckCircle, Target, Bookmark, BookmarkCheck } from 'lucide-react';
 import { Recipe } from '../types';
 
 interface RecipeCardProps {
   recipe: Recipe;
   availableIngredients: string[];
   onClick: () => void;
+  isBookmarked: boolean;
+  onBookmarkToggle: (recipe: Recipe, isBookmarked: boolean) => void;
 }
 
-const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, availableIngredients, onClick }) => {
+const RecipeCard: React.FC<RecipeCardProps> = ({ 
+  recipe, 
+  availableIngredients, 
+  onClick, 
+  isBookmarked, 
+  onBookmarkToggle 
+}) => {
   const [imageError, setImageError] = useState(false);
 
   const getSimilarityColor = (score: number) => {
@@ -27,10 +35,15 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, availableIngredients, o
     setImageError(true);
   };
 
+  const handleBookmarkClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onBookmarkToggle(recipe, isBookmarked);
+  };
+
   return (
     <div
       onClick={onClick}
-      className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1 overflow-hidden border-2 border-emerald-100"
+      className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1 overflow-hidden border-2 border-emerald-100 relative"
     >
       <div className="relative">
         {recipe.image && !imageError ? (
@@ -49,13 +62,31 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, availableIngredients, o
             </div>
           </div>
         )}
+        
+        {/* Bookmark Button */}
+        <button
+          onClick={handleBookmarkClick}
+          className={`absolute top-3 right-3 p-2 rounded-full transition-all duration-200 ${
+            isBookmarked 
+              ? 'bg-yellow-500 text-white shadow-lg hover:bg-yellow-600' 
+              : 'bg-white/90 text-gray-600 hover:bg-white hover:text-yellow-500 shadow-md'
+          }`}
+        >
+          {isBookmarked ? (
+            <BookmarkCheck className="w-4 h-4" />
+          ) : (
+            <Bookmark className="w-4 h-4" />
+          )}
+        </button>
+
         <div className="absolute top-3 left-3">
           <span className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${getSimilarityColor(recipe.similarityScore)}`}>
             <CheckCircle className="w-3 h-3" />
             {getSimilarityLabel(recipe.similarityScore)}
           </span>
         </div>
-        <div className="absolute top-3 right-3">
+        
+        <div className="absolute bottom-3 left-3">
           <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
             {recipe.similarityScore}% Match
           </span>
