@@ -7,6 +7,7 @@ import FilterPanel from './FilterPanel';
 import RecipeGrid from './RecipeGrid';
 import { FilterOptions, Recipe } from '../types';
 import { useAuth } from '../context/AuthContext';
+import { fetchBookmarkedRecipeIds, addBookmark, removeBookmark } from '../lib/supabase';
 
 const PantryPalContent: React.FC = () => {
   const [ingredients, setIngredients] = useState<string[]>([]);
@@ -17,6 +18,7 @@ const PantryPalContent: React.FC = () => {
   const [filters, setFilters] = useState<FilterOptions>({ category: '' });
   const [showOverlay, setShowOverlay] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [bookmarkedRecipeIds, setBookmarkedRecipeIds] = useState<string[]>([]);
 
   const { user, profile, signOut } = useAuth();
 
@@ -26,6 +28,30 @@ const PantryPalContent: React.FC = () => {
     ).length;
     return matched / recipeIngredients.length;
   };
+
+  // Fetch bookmarks for the user
+  const fetchBookmarks = async (userId: string) => {
+    if (!userId) return;
+    try {
+      const { data, error } = await fetchBookmarkedRecipeIds(userId);
+      if (!error && data) {
+        setBookmarkedRecipeIds(data);
+      } else {
+        setBookmarkedRecipeIds([]);
+      }
+    } catch (err) {
+      setBookmarkedRecipeIds([]);
+    }
+  };
+
+  // Fetch bookmarks on login
+  useEffect(() => {
+    if (user?.id) {
+      fetchBookmarks(user.id);
+    } else {
+      setBookmarkedRecipeIds([]);
+    }
+  }, [user]);
 
   const fetchRecipes = async (ingredientsList: string[], updatedFilters: FilterOptions = filters) => {
     if (ingredientsList.length === 0) return;
@@ -70,6 +96,8 @@ const PantryPalContent: React.FC = () => {
       setRecipes(filteredByMatch);
       setShowOverlay(true);
       if (filteredByMatch.length === 0) setError('No recipes found with sufficient ingredient matches.');
+      // Fetch bookmarks after recipes are fetched
+      if (user?.id) fetchBookmarks(user.id);
     } catch (error) {
       console.error('Error fetching recipes:', error);
       setError(error instanceof Error ? error.message : 'Failed to fetch recipes. Please try again.');
@@ -104,6 +132,24 @@ const PantryPalContent: React.FC = () => {
     await signOut();
     setShowUserMenu(false);
   };
+
+  // Add bookmark toggle handler
+  const handleBookmarkToggle = async (recipe: Recipe, isCurrentlyBookmarked: boolean) => {
+    if (!user?.id) return;
+    if (isCurrentlyBookmarked) {
+      await removeBookmark(user.id, String(recipe.id).trim());
+    } else {
+      await addBookmark(user.id, recipe);
+    }
+    // Always fetch the latest bookmarks from backend after toggle
+    fetchBookmarks(user.id);
+  };
+
+  useEffect(() => {
+    if (!user) {
+      setShowUserMenu(false);
+    }
+  }, [user]);
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-emerald-50 relative overflow-hidden">
@@ -212,6 +258,8 @@ const PantryPalContent: React.FC = () => {
                 availableIngredients={ingredients}
                 showResults={showResults}
                 loading={loading}
+                bookmarkedRecipeIds={bookmarkedRecipeIds}
+                onBookmarkToggle={handleBookmarkToggle}
               />
             </div>
           </motion.div>

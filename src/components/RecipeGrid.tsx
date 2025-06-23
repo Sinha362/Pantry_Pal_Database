@@ -11,68 +11,68 @@ interface RecipeGridProps {
   availableIngredients: string[];
   loading?: boolean;
   showResults: boolean;
+  bookmarkedRecipeIds?: string[];
+  onBookmarkToggle?: (recipe: Recipe, isCurrentlyBookmarked: boolean) => void;
 }
 
-const RecipeGrid: React.FC<RecipeGridProps> = ({ recipes, availableIngredients, loading, showResults }) => {
+const RecipeGrid: React.FC<RecipeGridProps> = ({ recipes, availableIngredients, loading, showResults, bookmarkedRecipeIds, onBookmarkToggle }) => {
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
-  const [bookmarkedRecipeIds, setBookmarkedRecipeIds] = useState<Set<string>>(new Set());
+  // Use prop if provided, else internal state
+  const [internalBookmarkedRecipeIds, setInternalBookmarkedRecipeIds] = useState<Set<string>>(new Set());
   const [bookmarkLoading, setBookmarkLoading] = useState<Set<string>>(new Set());
   const { user } = useAuth();
 
   const filteredRecipes = recipes.filter(recipe => recipe.similarityScore >= 50);
 
-  // Fetch bookmarked recipe IDs when user changes
+  // Fetch bookmarked recipe IDs only if prop is not provided
   useEffect(() => {
+    if (bookmarkedRecipeIds) return;
+    if (!user?.id) {
+      setInternalBookmarkedRecipeIds(new Set());
+      return;
+    }
     const loadBookmarkedRecipes = async () => {
-      if (!user?.id) return;
-
       try {
         const { data, error } = await fetchBookmarkedRecipeIds(user.id);
         if (error) {
           console.error('Error fetching bookmarked recipes:', error);
         } else if (data) {
-          setBookmarkedRecipeIds(new Set(data));
+          setInternalBookmarkedRecipeIds(new Set(data.map(id => String(id).trim())));
         }
       } catch (error) {
         console.error('Error fetching bookmarked recipes:', error);
       }
     };
-
     loadBookmarkedRecipes();
-  }, [user?.id]);
+  }, [user?.id, recipes.map(r => r.id).join(","), bookmarkedRecipeIds]);
 
   const handleBookmarkToggle = async (recipe: Recipe, isCurrentlyBookmarked: boolean) => {
+    if (onBookmarkToggle) {
+      onBookmarkToggle(recipe, isCurrentlyBookmarked);
+      return;
+    }
     if (!user?.id) return;
-
-    // Add recipe to loading state
     setBookmarkLoading(prev => new Set(prev).add(recipe.id));
-
     try {
       if (isCurrentlyBookmarked) {
-        // Remove bookmark
-        const { error } = await removeBookmark(user.id, recipe.id);
-        if (error) {
-          console.error('Error removing bookmark:', error);
-        } else {
-          setBookmarkedRecipeIds(prev => {
-            const newSet = new Set(prev);
-            newSet.delete(recipe.id);
-            return newSet;
-          });
-        }
+        const { error } = await removeBookmark(user.id, String(recipe.id).trim());
+        if (error) console.error('Error removing bookmark:', error);
       } else {
-        // Add bookmark
         const { error } = await addBookmark(user.id, recipe);
+        if (error) console.error('Error adding bookmark:', error);
+      }
+      // Always reload bookmarks from DB after toggle if not using prop
+      if (!bookmarkedRecipeIds) {
+        const { data, error } = await fetchBookmarkedRecipeIds(user.id);
         if (error) {
-          console.error('Error adding bookmark:', error);
-        } else {
-          setBookmarkedRecipeIds(prev => new Set(prev).add(recipe.id));
+          console.error('Error fetching bookmarked recipes:', error);
+        } else if (data) {
+          setInternalBookmarkedRecipeIds(new Set(data.map(id => String(id).trim())));
         }
       }
     } catch (error) {
       console.error('Error toggling bookmark:', error);
     } finally {
-      // Remove recipe from loading state
       setBookmarkLoading(prev => {
         const newSet = new Set(prev);
         newSet.delete(recipe.id);
@@ -120,6 +120,9 @@ const RecipeGrid: React.FC<RecipeGridProps> = ({ recipes, availableIngredients, 
     );
   }
 
+  // Use prop if provided, else internal state
+  const bookmarkSet = bookmarkedRecipeIds ? new Set(bookmarkedRecipeIds.map(id => String(id).trim())) : internalBookmarkedRecipeIds;
+
   return (
     <>
       <div className="mb-6">
@@ -131,12 +134,10 @@ const RecipeGrid: React.FC<RecipeGridProps> = ({ recipes, availableIngredients, 
           These recipes match your available ingredients. Sorted by similarity score.
         </p>
       </div>
-
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredRecipes.map((recipe) => {
-          const isBookmarked = bookmarkedRecipeIds.has(recipe.id);
+          const isBookmarked = bookmarkSet.has(String(recipe.id).trim());
           const isLoading = bookmarkLoading.has(recipe.id);
-          
           return (
             <RecipeCard
               key={recipe.id}
@@ -149,13 +150,12 @@ const RecipeGrid: React.FC<RecipeGridProps> = ({ recipes, availableIngredients, 
           );
         })}
       </div>
-
       {selectedRecipe && (
         <RecipeModal
           recipe={selectedRecipe}
           availableIngredients={availableIngredients}
           onClose={() => setSelectedRecipe(null)}
-          isBookmarked={bookmarkedRecipeIds.has(selectedRecipe.id)}
+          isBookmarked={bookmarkSet.has(String(selectedRecipe.id).trim())}
           onBookmarkToggle={handleBookmarkToggle}
         />
       )}
