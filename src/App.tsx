@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import AuthForm from './components/AuthForm';
 import PantryPalContent from './components/PantryPalContent';
+import BookmarkedRecipesPage from './components/BookmarkedRecipesPage';
 import { motion } from 'framer-motion';
 import { ChefHat } from 'lucide-react';
 
-const AppContent: React.FC = () => {
+interface AppContentProps {
+  currentView: 'pantryPal' | 'bookmarkedRecipes';
+  setCurrentView: (view: 'pantryPal' | 'bookmarkedRecipes') => void;
+}
+
+const AppContent: React.FC<AppContentProps> = ({ currentView, setCurrentView }) => {
   const { user, loading } = useAuth();
 
   if (loading) {
@@ -29,13 +35,26 @@ const AppContent: React.FC = () => {
     );
   }
 
-  return user ? <PantryPalContent /> : <AuthForm />;
+  if (!user) {
+    return <AuthForm />;
+  }
+
+  return currentView === 'pantryPal' ? (
+    <PantryPalContent
+      setCurrentView={setCurrentView}
+      onNavigateToBookmarks={() => setCurrentView('bookmarkedRecipes')}
+    />
+  ) : (
+    <BookmarkedRecipesPage setCurrentView={setCurrentView} />
+  );
 };
 
 function App() {
+  const [currentView, setCurrentView] = useState<'pantryPal' | 'bookmarkedRecipes'>('pantryPal');
+
   return (
     <AuthProvider>
-      <AppContent />
+      <AppContent currentView={currentView} setCurrentView={setCurrentView} />
     </AuthProvider>
   );
 }

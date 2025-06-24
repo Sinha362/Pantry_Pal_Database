@@ -9,7 +9,12 @@ import { FilterOptions, Recipe } from '../types';
 import { useAuth } from '../context/AuthContext';
 import { fetchBookmarkedRecipeIds, addBookmark, removeBookmark } from '../lib/supabase';
 
-const PantryPalContent: React.FC = () => {
+interface PantryPalContentProps {
+  setCurrentView: (view: 'pantryPal' | 'bookmarkedRecipes') => void;
+  onNavigateToBookmarks?: () => void;
+}
+
+const PantryPalContent: React.FC<PantryPalContentProps> = ({ setCurrentView, onNavigateToBookmarks }) => {
   const [ingredients, setIngredients] = useState<string[]>([]);
   const [showResults, setShowResults] = useState(false);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -178,6 +183,13 @@ const PantryPalContent: React.FC = () => {
                   </p>
                   <p className="text-xs text-gray-500">{user?.email}</p>
                 </div>
+                <button
+                  onClick={onNavigateToBookmarks}
+                  className="w-full px-4 py-2 text-left text-sm text-emerald-700 hover:bg-emerald-50 flex items-center gap-2 transition-colors border-b border-gray-100"
+                >
+                  <User className="w-4 h-4" />
+                  My Bookmarks
+                </button>
                 <button
                   onClick={handleSignOut}
                   className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 transition-colors"
