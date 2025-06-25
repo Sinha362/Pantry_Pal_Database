@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChefHat, Mail, Lock, User, Eye, EyeOff, AlertCircle } from 'lucide-react';
+import { ChefHat, Mail, Lock, User, Eye, EyeOff, AlertCircle, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
-const AuthForm: React.FC = () => {
+interface AuthFormProps {
+  onBack?: () => void;
+}
+
+const AuthForm: React.FC<AuthFormProps> = ({ onBack }) => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -59,6 +63,20 @@ const AuthForm: React.FC = () => {
         transition={{ duration: 0.6 }}
         className="w-full max-w-md"
       >
+        {/* Back Button */}
+        {onBack && (
+          <motion.button
+            onClick={onBack}
+            className="flex items-center gap-2 text-emerald-700 hover:text-emerald-900 font-medium mb-6 transition-colors"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <ArrowLeft className="w-5 h-5" />
+            Back to Home
+          </motion.button>
+        )}
+
         {/* Logo and Title */}
         <div className="text-center mb-8">
           <motion.div
