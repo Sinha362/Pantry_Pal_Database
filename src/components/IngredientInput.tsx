@@ -37,13 +37,13 @@ const IngredientInput: React.FC<IngredientInputProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-3xl shadow-lg p-6 mb-8 max-w-3xl mx-auto">
+    <div className="bg-slate-800/50 backdrop-blur-sm rounded-3xl shadow-lg shadow-slate-900/50 p-6 mb-8 max-w-3xl mx-auto border border-slate-700/50">
       <div className="flex flex-col items-center text-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
-          <Search className="w-6 h-6 text-emerald-600" />
+        <h2 className="text-2xl font-bold text-white mb-2 flex items-center gap-2">
+          <Search className="w-6 h-6 text-emerald-400" />
           What ingredients do you have?
         </h2>
-        <p className="text-gray-600 mb-0 max-w-xl">
+        <p className="text-slate-400 mb-0 max-w-xl">
           Add your ingredients and we'll find recipes that match what you have available!
         </p>
       </div>
@@ -56,11 +56,11 @@ const IngredientInput: React.FC<IngredientInputProps> = ({
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             placeholder="Type an ingredient you have..."
-            className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 hover:ring-2 hover:ring-emerald-300 hover:border-emerald-400 transition duration-250 outline-none transition-colors"
+            className="flex-1 px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 hover:ring-2 hover:ring-emerald-300/50 hover:border-emerald-400/50 transition duration-250 outline-none text-white placeholder-slate-400"
           />
           <button
             type="submit"
-            className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2 font-medium"
+            className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2 font-medium shadow-lg shadow-emerald-500/25"
           >
             <Plus className="w-5 h-5" />
             Add
@@ -77,7 +77,7 @@ const IngredientInput: React.FC<IngredientInputProps> = ({
             transition={{ duration: 0.4, ease: "easeInOut" }}
             className="space-y-4 overflow-hidden"
           >           
-            <h3 className="font-semibold text-gray-700">Your selected ingredients:</h3>
+            <h3 className="font-semibold text-slate-300">Your selected ingredients:</h3>
             <div className="flex flex-wrap gap-2">
               <AnimatePresence mode="popLayout">
                 {ingredients.map((ingredient, index) => (
@@ -88,12 +88,12 @@ const IngredientInput: React.FC<IngredientInputProps> = ({
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.8 }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    className="bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full text-sm flex items-center gap-2 capitalize"
+                    className="bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full text-sm flex items-center gap-2 capitalize border border-emerald-500/30"
                   >
                     {ingredient}
                     <button
                       onClick={() => removeIngredient(index)}
-                      className="hover:bg-emerald-200 rounded-full p-1 transition-colors"
+                      className="hover:bg-emerald-500/30 rounded-full p-1 transition-colors"
                     >
                       <X className="w-3 h-3" />
                     </button>
@@ -105,7 +105,7 @@ const IngredientInput: React.FC<IngredientInputProps> = ({
             <div className="flex justify-center pt-4">
               <button
                 onClick={onGoClick}
-                className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-8 py-4 rounded-xl font-bold text-lg flex items-center gap-3 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-8 py-4 rounded-xl font-bold text-lg flex items-center gap-3 shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 transition-all duration-300 transform hover:-translate-y-1"
               >
                 Find My Recipes
                 <ArrowRight className="w-6 h-6" />
@@ -113,7 +113,7 @@ const IngredientInput: React.FC<IngredientInputProps> = ({
             </div>
             
             {!showResults && (
-              <p className="text-center text-gray-500 text-sm mt-2">
+              <p className="text-center text-slate-500 text-sm mt-2">
                 Click "Find My Recipes" to see what you can make with these ingredients!
               </p>
             )}

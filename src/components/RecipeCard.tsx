@@ -20,9 +20,9 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
   const [imageError, setImageError] = useState(false);
 
   const getSimilarityColor = (score: number) => {
-    if (score >= 80) return 'text-green-600 bg-green-100';
-    if (score >= 60) return 'text-yellow-600 bg-yellow-100';
-    return 'text-red-600 bg-red-100';
+    if (score >= 80) return 'text-green-400 bg-green-500/20 border-green-500/30';
+    if (score >= 60) return 'text-yellow-400 bg-yellow-500/20 border-yellow-500/30';
+    return 'text-red-400 bg-red-500/20 border-red-500/30';
   };
 
   const getSimilarityLabel = (score: number) => {
@@ -43,7 +43,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
   return (
     <div
       onClick={onClick}
-      className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1 overflow-hidden border-2 border-emerald-100 relative"
+      className="bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-lg shadow-slate-900/50 hover:shadow-xl hover:shadow-slate-900/70 transition-all duration-300 cursor-pointer transform hover:-translate-y-1 overflow-hidden border border-slate-700/50 hover:border-emerald-500/30 relative"
     >
       <div className="relative">
         {recipe.image && !imageError ? (
@@ -55,10 +55,10 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
             className="w-full h-48 object-cover"
           />
         ) : (
-          <div className="w-full h-48 bg-gradient-to-br from-emerald-100 to-teal-100 flex items-center justify-center">
+          <div className="w-full h-48 bg-gradient-to-br from-slate-700 to-slate-800 flex items-center justify-center">
             <div className="text-center">
-              <Target className="w-16 h-16 text-emerald-600 mx-auto mb-2" />
-              <p className="text-emerald-700 font-medium">{recipe.category}</p>
+              <Target className="w-16 h-16 text-emerald-400 mx-auto mb-2" />
+              <p className="text-emerald-400 font-medium">{recipe.category}</p>
             </div>
           </div>
         )}
@@ -66,10 +66,10 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
         {/* Bookmark Button */}
         <button
           onClick={handleBookmarkClick}
-          className={`absolute top-3 right-3 p-2 rounded-full transition-all duration-200 ${
+          className={`absolute top-3 right-3 p-2 rounded-full transition-all duration-200 backdrop-blur-sm ${
             isBookmarked 
-              ? 'bg-yellow-500 text-white shadow-lg hover:bg-yellow-600' 
-              : 'bg-white/90 text-gray-600 hover:bg-white hover:text-yellow-500 shadow-md'
+              ? 'bg-yellow-500/90 text-white shadow-lg shadow-yellow-500/25 hover:bg-yellow-600/90' 
+              : 'bg-slate-800/80 text-slate-400 hover:bg-slate-700/80 hover:text-yellow-400 shadow-md'
           }`}
         >
           {isBookmarked ? (
@@ -80,23 +80,23 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
         </button>
 
         <div className="absolute top-3 left-3">
-          <span className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${getSimilarityColor(recipe.similarityScore)}`}>
+          <span className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1 border backdrop-blur-sm ${getSimilarityColor(recipe.similarityScore)}`}>
             <CheckCircle className="w-3 h-3" />
             {getSimilarityLabel(recipe.similarityScore)}
           </span>
         </div>
         
         <div className="absolute bottom-3 left-3">
-          <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+          <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-400 border border-blue-500/30 backdrop-blur-sm">
             {recipe.similarityScore}% Match
           </span>
         </div>
       </div>
 
       <div className="p-5">
-        <h3 className="text-xl font-bold text-gray-800 mb-2">{recipe.title}</h3>
+        <h3 className="text-xl font-bold text-white mb-2">{recipe.title}</h3>
         
-        <div className="flex items-center gap-4 mb-4 text-sm text-gray-500">
+        <div className="flex items-center gap-4 mb-4 text-sm text-slate-400">
           <div className="flex items-center gap-1">
             <Star className="w-4 h-4" />
             <span>{recipe.category}</span>
@@ -106,12 +106,12 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
           </div>
         </div>
 
-        <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3">
-          <div className="flex items-center gap-2 text-emerald-700 mb-2">
+        <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3">
+          <div className="flex items-center gap-2 text-emerald-400 mb-2">
             <CheckCircle className="w-4 h-4" />
             <span className="text-sm font-medium">Similarity: {recipe.similarityScore}%</span>
           </div>
-          <div className="text-xs text-emerald-600">
+          <div className="text-xs text-emerald-300">
             <strong>Ingredients needed:</strong> {recipe.ingredients.slice(0, 3).join(', ')}
             {recipe.ingredients.length > 3 && ` +${recipe.ingredients.length - 3} more`}
           </div>

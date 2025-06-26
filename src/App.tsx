@@ -17,20 +17,27 @@ const AppContent: React.FC<AppContentProps> = ({ currentView, setCurrentView }) 
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 to-teal-50">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+        {/* Ambient Background Effects */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-20 left-10 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-10 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl animate-pulse delay-2000"></div>
+        </div>
+
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-center"
+          className="text-center relative z-10"
         >
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            className="bg-emerald-600 p-4 rounded-full w-16 h-16 mx-auto mb-4"
+            className="bg-gradient-to-br from-emerald-500 to-teal-600 p-4 rounded-full w-16 h-16 mx-auto mb-4 shadow-lg shadow-emerald-500/25"
           >
             <ChefHat className="w-8 h-8 text-white" />
           </motion.div>
-          <p className="text-gray-600 text-lg">Loading Pantry Pal...</p>
+          <p className="text-slate-300 text-lg">Loading Pantry Pal...</p>
         </motion.div>
       </div>
     );
@@ -39,7 +46,7 @@ const AppContent: React.FC<AppContentProps> = ({ currentView, setCurrentView }) 
   // If user is not authenticated, show landing or auth based on current view
   if (!user) {
     if (currentView === 'auth') {
-      return <AuthForm />;
+      return <AuthForm onBack={() => setCurrentView('landing')} />;
     }
     return (
       <LandingPage

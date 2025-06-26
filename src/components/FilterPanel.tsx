@@ -35,32 +35,32 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters, onFiltersChange }) =
   ];
 
   return (
-    <div className="bg-white rounded-3xl shadow-lg p-6 mb-8 max-w-3xl mx-auto">
+    <div className="bg-slate-800/50 backdrop-blur-sm rounded-3xl shadow-lg shadow-slate-900/50 p-6 mb-8 max-w-3xl mx-auto border border-slate-700/50">
       <div className="flex flex-col items-center text-center mb-6">
-        <h2 className="text-xl font-bold text-gray-800 mb-0 flex items-center gap-2">
-          <Filter className="w-5 h-5 text-blue-600" />
+        <h2 className="text-xl font-bold text-white mb-0 flex items-center gap-2">
+          <Filter className="w-5 h-5 text-emerald-400" />
           Filters
         </h2>
       </div>
 
       <div className="max-w-md">
         <div>
-          <h3 className="font-semibold text-gray-700 mb-3 flex items-center gap-1">
+          <h3 className="font-semibold text-slate-300 mb-3 flex items-center gap-1">
             <Tag className="w-4 h-4" />
             Category
           </h3>
           <select
             value={filters.category}
             onChange={(e) => updateFilter('category', e.target.value === 'All Categories' ? '' : e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors bg-white capitalize"
+            className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-colors text-white capitalize"
           >
             {categories.map((category) => (
-              <option key={category} value={category === 'All Categories' ? '' : category} className="capitalize">
+              <option key={category} value={category === 'All Categories' ? '' : category} className="capitalize bg-slate-700">
                 {category === 'All Categories' ? category : category.charAt(0).toUpperCase() + category.slice(1)}
               </option>
             ))}
           </select>
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             Filter recipes by category. Changes will automatically refresh results.
           </p>
         </div>

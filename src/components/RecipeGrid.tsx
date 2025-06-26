@@ -88,29 +88,29 @@ const RecipeGrid: React.FC<RecipeGridProps> = ({ recipes, availableIngredients, 
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mb-4"></div>
-        <p className="text-gray-600 text-lg">Finding recipes for you...</p>
-        <p className="text-gray-500 text-sm mt-2">Searching our database for the best matches</p>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500 mb-4"></div>
+        <p className="text-slate-300 text-lg">Finding recipes for you...</p>
+        <p className="text-slate-500 text-sm mt-2">Searching our database for the best matches</p>
       </div>
     );
   }
 
   if (filteredRecipes.length === 0) {
     return (
-      <div className="text-center py-12 bg-white rounded-xl shadow-lg">
+      <div className="text-center py-12 bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-slate-700/50">
         <AlertTriangle className="w-16 h-16 text-amber-400 mx-auto mb-4" />
-        <h3 className="text-xl font-semibold text-gray-600 mb-2">No recipes found</h3>
-        <p className="text-gray-500 mb-4">
+        <h3 className="text-xl font-semibold text-slate-300 mb-2">No recipes found</h3>
+        <p className="text-slate-500 mb-4">
           {availableIngredients.length === 0 
             ? "Add some ingredients to see what you can make!"
             : "We couldn't find recipes that match your ingredients and filters."
           }
         </p>
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-md mx-auto">
-          <p className="text-blue-800 text-sm">
+        <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-4 max-w-md mx-auto">
+          <p className="text-blue-300 text-sm">
             <strong>Tips:</strong>
           </p>
-          <ul className="text-blue-700 text-sm mt-2 text-left">
+          <ul className="text-blue-400 text-sm mt-2 text-left">
             <li>• Try adding more common ingredients</li>
             <li>• Remove category filters to see more results</li>
             <li>• Check your spelling</li>
@@ -126,11 +126,11 @@ const RecipeGrid: React.FC<RecipeGridProps> = ({ recipes, availableIngredients, 
   return (
     <>
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
-          <ChefHat className="w-7 h-7 text-emerald-600" />
+        <h2 className="text-2xl font-bold text-white mb-2 flex items-center gap-2">
+          <ChefHat className="w-7 h-7 text-emerald-400" />
           Recipe Matches ({filteredRecipes.length})
         </h2>
-        <p className="text-gray-600">
+        <p className="text-slate-400">
           These recipes match your available ingredients. Sorted by similarity score.
         </p>
       </div>

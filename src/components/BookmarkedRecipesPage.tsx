@@ -44,24 +44,31 @@ const BookmarkedRecipesPage: React.FC<BookmarkedRecipesPageProps> = ({ setCurren
   }, [user]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50 p-4">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4 relative overflow-hidden">
+      {/* Ambient Background Effects */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl animate-pulse delay-2000"></div>
+      </div>
+
+      <div className="max-w-4xl mx-auto relative z-10">
         <div className="flex items-center justify-between mb-8">
           <button
-            className="flex items-center gap-2 text-emerald-700 hover:text-emerald-900 font-medium"
+            className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 font-medium transition-colors"
             onClick={() => setCurrentView('pantryPal')}
             aria-label="Back to Pantry Pal"
           >
             <ArrowLeft className="w-5 h-5" />
             Back to Pantry Pal
           </button>
-          <h1 className="text-3xl font-bold text-center flex items-center justify-center">
-            <Heart className="w-8 h-8 text-red-500 mr-2" />
+          <h1 className="text-3xl font-bold text-center flex items-center justify-center text-white">
+            <Heart className="w-8 h-8 text-red-400 mr-2" />
             Bookmarked Recipes
           </h1>
           <div className="w-32" /> {/* Spacer for alignment */}
         </div>
-        {error && <p className="text-center text-red-500 mb-4">{error}</p>}
+        {error && <p className="text-center text-red-400 mb-4">{error}</p>}
         <RecipeGrid
           recipes={recipes}
           availableIngredients={[]}
