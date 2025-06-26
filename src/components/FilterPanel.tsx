@@ -35,10 +35,10 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters, onFiltersChange }) =
   ];
 
   return (
-    <div className="bg-slate-800/50 backdrop-blur-sm rounded-3xl shadow-lg shadow-slate-900/50 p-6 mb-8 max-w-3xl mx-auto border border-slate-700/50">
+    <div className="bg-slate-800/30 backdrop-blur-md rounded-3xl shadow-lg shadow-slate-900/30 p-6 mb-8 max-w-3xl mx-auto border border-slate-700/40">
       <div className="flex flex-col items-center text-center mb-6">
         <h2 className="text-xl font-bold text-white mb-0 flex items-center gap-2">
-          <Filter className="w-5 h-5 text-emerald-400" />
+          <Filter className="w-5 h-5 text-violet-400" />
           Filters
         </h2>
       </div>
@@ -52,7 +52,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters, onFiltersChange }) =
           <select
             value={filters.category}
             onChange={(e) => updateFilter('category', e.target.value === 'All Categories' ? '' : e.target.value)}
-            className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-colors text-white capitalize"
+            className="w-full px-4 py-2 bg-slate-700/40 border border-slate-600/50 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-violet-500 outline-none transition-colors text-white capitalize"
           >
             {categories.map((category) => (
               <option key={category} value={category === 'All Categories' ? '' : category} className="capitalize bg-slate-700">

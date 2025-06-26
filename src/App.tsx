@@ -17,12 +17,13 @@ const AppContent: React.FC<AppContentProps> = ({ currentView, setCurrentView }) 
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-slate-900 to-indigo-900 relative overflow-hidden">
         {/* Ambient Background Effects */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-10 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-          <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl animate-pulse delay-2000"></div>
+          <div className="absolute top-20 left-10 w-96 h-96 bg-emerald-500/8 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-10 w-80 h-80 bg-violet-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-cyan-500/8 rounded-full blur-3xl animate-pulse delay-2000"></div>
+          <div className="absolute top-1/3 right-1/3 w-72 h-72 bg-indigo-500/6 rounded-full blur-3xl animate-pulse delay-3000"></div>
         </div>
 
         <motion.div
@@ -33,7 +34,7 @@ const AppContent: React.FC<AppContentProps> = ({ currentView, setCurrentView }) 
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            className="bg-gradient-to-br from-emerald-500 to-teal-600 p-4 rounded-full w-16 h-16 mx-auto mb-4 shadow-lg shadow-emerald-500/25"
+            className="bg-gradient-to-br from-emerald-500 to-teal-600 p-4 rounded-full w-16 h-16 mx-auto mb-4 shadow-lg shadow-emerald-500/20"
           >
             <ChefHat className="w-8 h-8 text-white" />
           </motion.div>

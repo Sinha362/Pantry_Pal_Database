@@ -22,9 +22,9 @@ const RecipeModal: React.FC<RecipeModalProps> = ({
   const missingIngredients = getMissingIngredients(recipe, availableIngredients);
 
   const getSimilarityColor = (score: number) => {
-    if (score >= 80) return 'text-green-400 bg-green-500/20 border-green-500/30';
-    if (score >= 60) return 'text-yellow-400 bg-yellow-500/20 border-yellow-500/30';
-    return 'text-red-400 bg-red-500/20 border-red-500/30';
+    if (score >= 80) return 'text-green-400 bg-green-500/15 border-green-500/25';
+    if (score >= 60) return 'text-yellow-400 bg-yellow-500/15 border-yellow-500/25';
+    return 'text-red-400 bg-red-500/15 border-red-500/25';
   };
 
   const handleImageError = () => {
@@ -40,17 +40,17 @@ const RecipeModal: React.FC<RecipeModalProps> = ({
     : recipe.instructions.split('\r\n').filter((step: string) => step.trim() !== '' && isNaN(Number(step.trim())) && !/^STEP \d+$/i.test(step.trim()));
 
   return (
-    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-      <div className="bg-slate-800/90 backdrop-blur-sm rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-slate-700/50">
-        <div className="sticky top-0 bg-slate-800/95 backdrop-blur-sm border-b border-slate-700/50 px-6 py-4 flex items-center justify-between">
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+      <div className="bg-slate-800/70 backdrop-blur-md rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-slate-700/50">
+        <div className="sticky top-0 bg-slate-800/90 backdrop-blur-md border-b border-slate-700/50 px-6 py-4 flex items-center justify-between">
           <h2 className="text-2xl font-bold text-white">{recipe.title}</h2>
           <div className="flex items-center gap-2">
             <button
               onClick={handleBookmarkClick}
               className={`p-2 rounded-full transition-all duration-200 ${
                 isBookmarked 
-                  ? 'bg-yellow-500/90 text-white hover:bg-yellow-600/90 shadow-lg shadow-yellow-500/25' 
-                  : 'bg-slate-700/50 text-slate-400 hover:bg-slate-600/50 hover:text-yellow-400'
+                  ? 'bg-yellow-500/80 text-white hover:bg-yellow-600/80 shadow-lg shadow-yellow-500/20' 
+                  : 'bg-slate-700/40 text-slate-400 hover:bg-slate-600/40 hover:text-yellow-400'
               }`}
             >
               {isBookmarked ? (
@@ -61,7 +61,7 @@ const RecipeModal: React.FC<RecipeModalProps> = ({
             </button>
             <button
               onClick={onClose}
-              className="p-2 hover:bg-slate-700/50 rounded-full transition-colors text-slate-400 hover:text-white"
+              className="p-2 hover:bg-slate-700/40 rounded-full transition-colors text-slate-400 hover:text-white"
             >
               <X className="w-6 h-6" />
             </button>
@@ -80,7 +80,7 @@ const RecipeModal: React.FC<RecipeModalProps> = ({
                   className="w-full h-64 object-cover rounded-lg"
                 />
               ) : (
-                <div className="w-full h-64 bg-gradient-to-br from-slate-700 to-slate-800 rounded-lg flex items-center justify-center">
+                <div className="w-full h-64 bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-lg flex items-center justify-center">
                   <div className="text-center">
                     <Target className="w-20 h-20 text-emerald-400 mx-auto mb-3" />
                     <p className="text-emerald-400 font-medium text-lg">{recipe.category}</p>
@@ -100,7 +100,7 @@ const RecipeModal: React.FC<RecipeModalProps> = ({
                 </div>
               </div>
 
-              <div className="p-4 bg-slate-700/50 rounded-lg border border-slate-600/50">
+              <div className="p-4 bg-slate-700/30 rounded-lg border border-slate-600/40">
                 <div className="flex items-center gap-2 mb-2">
                   <span className={`px-3 py-1 rounded-full text-sm font-medium border ${getSimilarityColor(recipe.similarityScore)}`}>
                     {recipe.similarityScore}% Similarity Match
@@ -112,7 +112,7 @@ const RecipeModal: React.FC<RecipeModalProps> = ({
               </div>
 
               {isBookmarked && (
-                <div className="p-3 bg-yellow-500/20 border border-yellow-500/30 rounded-lg">
+                <div className="p-3 bg-yellow-500/15 border border-yellow-500/25 rounded-lg">
                   <div className="flex items-center gap-2 text-yellow-300">
                     <BookmarkCheck className="w-4 h-4" />
                     <span className="text-sm font-medium">Recipe Bookmarked</span>
@@ -151,7 +151,7 @@ const RecipeModal: React.FC<RecipeModalProps> = ({
               </ul>
 
               {missingIngredients.length > 0 && (
-                <div className="mt-4 p-3 bg-orange-500/20 border border-orange-500/30 rounded-lg">
+                <div className="mt-4 p-3 bg-orange-500/15 border border-orange-500/25 rounded-lg">
                   <p className="font-medium text-orange-300 mb-1">Missing Ingredients:</p>
                   <p className="text-sm text-orange-400">
                     {missingIngredients.join(', ')}

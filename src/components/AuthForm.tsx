@@ -56,12 +56,13 @@ const AuthForm: React.FC<AuthFormProps> = ({ onBack }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-4 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-slate-900 to-indigo-900 px-4 relative overflow-hidden">
       {/* Ambient Background Effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl animate-pulse delay-2000"></div>
+        <div className="absolute top-20 left-10 w-96 h-96 bg-emerald-500/8 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-80 h-80 bg-violet-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-cyan-500/8 rounded-full blur-3xl animate-pulse delay-2000"></div>
+        <div className="absolute top-1/3 right-1/3 w-72 h-72 bg-indigo-500/6 rounded-full blur-3xl animate-pulse delay-3000"></div>
       </div>
 
       <motion.div
@@ -90,7 +91,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onBack }) => {
             initial={{ scale: 0.8 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.5 }}
-            className="bg-gradient-to-br from-emerald-500 to-teal-600 p-4 rounded-full w-20 h-20 mx-auto mb-4 shadow-lg shadow-emerald-500/25"
+            className="bg-gradient-to-br from-emerald-500 to-teal-600 p-4 rounded-full w-20 h-20 mx-auto mb-4 shadow-lg shadow-emerald-500/20"
           >
             <ChefHat className="w-12 h-12 text-white" />
           </motion.div>
@@ -103,7 +104,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onBack }) => {
         {/* Auth Form */}
         <motion.div
           layout
-          className="bg-slate-800/50 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-slate-700/50"
+          className="bg-slate-800/40 backdrop-blur-md rounded-2xl shadow-xl p-8 border border-slate-700/50"
         >
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Full Name Field (Sign Up Only) */}
@@ -127,7 +128,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onBack }) => {
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-colors text-white placeholder-slate-400"
+                  className="w-full pl-10 pr-4 py-3 bg-slate-700/40 border border-slate-600/50 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-colors text-white placeholder-slate-400"
                   placeholder="Enter your full name"
                   required={isSignUp}
                 />
@@ -146,7 +147,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onBack }) => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-colors text-white placeholder-slate-400"
+                  className="w-full pl-10 pr-4 py-3 bg-slate-700/40 border border-slate-600/50 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-colors text-white placeholder-slate-400"
                   placeholder="Enter your email"
                   required
                 />
@@ -165,7 +166,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onBack }) => {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-12 py-3 bg-slate-700/50 border border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-colors text-white placeholder-slate-400"
+                  className="w-full pl-10 pr-12 py-3 bg-slate-700/40 border border-slate-600/50 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-colors text-white placeholder-slate-400"
                   placeholder="Enter your password"
                   required
                   minLength={6}
@@ -188,7 +189,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onBack }) => {
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-red-500/20 border border-red-500/30 rounded-lg p-3 flex items-center gap-2"
+                className="bg-red-500/15 border border-red-500/25 rounded-lg p-3 flex items-center gap-2"
               >
                 <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
                 <p className="text-red-300 text-sm">{error}</p>
@@ -199,7 +200,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onBack }) => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 disabled:from-slate-600 disabled:to-slate-700 text-white py-3 px-4 rounded-lg font-medium transition-all duration-200 transform hover:-translate-y-0.5 disabled:transform-none disabled:cursor-not-allowed shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40"
+              className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 disabled:from-slate-600 disabled:to-slate-700 text-white py-3 px-4 rounded-lg font-medium transition-all duration-200 transform hover:-translate-y-0.5 disabled:transform-none disabled:cursor-not-allowed shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30"
             >
               {loading ? (
                 <div className="flex items-center justify-center gap-2">

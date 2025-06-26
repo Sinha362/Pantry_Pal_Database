@@ -66,12 +66,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onAuthClick }) 
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-hidden relative">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900 overflow-hidden relative">
       {/* Ambient Background Effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl animate-pulse delay-2000"></div>
+        <div className="absolute top-20 left-10 w-96 h-96 bg-emerald-500/8 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-80 h-80 bg-violet-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-cyan-500/8 rounded-full blur-3xl animate-pulse delay-2000"></div>
+        <div className="absolute top-1/3 right-1/3 w-72 h-72 bg-orange-500/6 rounded-full blur-3xl animate-pulse delay-3000"></div>
       </div>
 
       {/* Header */}
@@ -88,7 +89,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onAuthClick }) 
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
-            <div className="bg-gradient-to-br from-emerald-500 to-teal-600 p-3 rounded-xl shadow-lg shadow-emerald-500/25">
+            <div className="bg-gradient-to-br from-emerald-500 to-teal-600 p-3 rounded-xl shadow-lg shadow-emerald-500/20">
               <ChefHat className="w-8 h-8 text-white" />
             </div>
             <div>
@@ -103,7 +104,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onAuthClick }) 
           {/* Auth Button */}
           <motion.button
             onClick={onAuthClick}
-            className="bg-slate-800/80 backdrop-blur-sm text-emerald-400 px-6 py-2 rounded-full font-medium shadow-lg shadow-slate-900/50 border border-slate-700 hover:border-emerald-500/50 transition-all duration-200"
+            className="bg-slate-800/60 backdrop-blur-sm text-emerald-400 px-6 py-2 rounded-full font-medium shadow-lg shadow-slate-900/30 border border-slate-700/50 hover:border-emerald-500/40 hover:bg-slate-700/60 transition-all duration-200"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -125,7 +126,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onAuthClick }) 
             <div className="space-y-6">
               <motion.div
                 variants={itemVariants}
-                className="inline-flex items-center gap-2 bg-emerald-500/20 backdrop-blur-sm text-emerald-300 px-4 py-2 rounded-full text-sm font-medium border border-emerald-500/30"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500/15 to-teal-500/15 backdrop-blur-sm text-emerald-300 px-4 py-2 rounded-full text-sm font-medium border border-emerald-500/25"
               >
                 <Sparkles className="w-4 h-4" />
                 Discover Recipes Based on Your Ingredients
@@ -136,7 +137,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onAuthClick }) 
                 className="text-5xl lg:text-6xl font-bold text-white leading-tight"
               >
                 Turn your Pantry into
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400"> a recipe book</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400"> a recipe book</span>
               </motion.h2>
 
               <motion.p 
@@ -155,7 +156,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onAuthClick }) 
               {features.map((feature, index) => (
                 <motion.div
                   key={index}
-                  className="bg-slate-800/50 backdrop-blur-sm p-4 rounded-xl border border-slate-700/50 hover:shadow-lg hover:shadow-emerald-500/10 transition-all duration-300 hover:border-emerald-500/30"
+                  className="bg-slate-800/40 backdrop-blur-sm p-4 rounded-xl border border-slate-700/40 hover:shadow-lg hover:shadow-emerald-500/5 transition-all duration-300 hover:border-emerald-500/30 hover:bg-slate-800/60"
                   whileHover={{ scale: 1.02, y: -2 }}
                 >
                   <feature.icon className="w-6 h-6 text-emerald-400 mb-2" />
@@ -175,11 +176,11 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onAuthClick }) 
                 <div className="text-sm text-slate-400">Recipes Available</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-emerald-400">95%</div>
+                <div className="text-2xl font-bold text-teal-400">95%</div>
                 <div className="text-sm text-slate-400">Match Accuracy</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-emerald-400">Minimize</div>
+                <div className="text-2xl font-bold text-cyan-400">Minimize</div>
                 <div className="text-sm text-slate-400">Food Waste</div>
               </div>
             </motion.div>
@@ -188,7 +189,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onAuthClick }) 
             <motion.div variants={itemVariants} className="pt-4">
               <motion.button
                 onClick={onGetStarted}
-                className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-8 py-4 rounded-xl font-bold text-lg flex items-center gap-3 shadow-xl shadow-emerald-500/25 hover:shadow-emerald-500/40 transition-all duration-300"
+                className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-8 py-4 rounded-xl font-bold text-lg flex items-center gap-3 shadow-xl shadow-emerald-500/20 hover:shadow-emerald-500/30 transition-all duration-300"
                 whileHover={{ scale: 1.05, y: -3 }}
                 whileTap={{ scale: 0.95 }}
                 initial={{ opacity: 0, y: 20 }}
@@ -217,18 +218,18 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onAuthClick }) 
               className="relative"
             >
               {/* Phone Mockup */}
-              <div className="relative bg-slate-900 rounded-[3rem] p-2 shadow-2xl shadow-slate-900/50 border border-slate-700">
-                <div className="bg-slate-800 rounded-[2.5rem] overflow-hidden w-80 h-[640px] relative border border-slate-700">
+              <div className="relative bg-gray-900 rounded-[3rem] p-2 shadow-2xl shadow-gray-900/40 border border-gray-800">
+                <div className="bg-slate-900 rounded-[2.5rem] overflow-hidden w-80 h-[640px] relative border border-slate-800">
                   {/* Status Bar */}
-                  <div className="bg-slate-900 h-8 flex items-center justify-center">
+                  <div className="bg-gray-900 h-8 flex items-center justify-center">
                     <div className="w-20 h-1 bg-slate-600 rounded-full"></div>
                   </div>
                   
                   {/* App Content Preview */}
-                  <div className="p-4 space-y-4 bg-gradient-to-br from-slate-800 to-slate-900 h-full">
+                  <div className="p-4 space-y-4 bg-gradient-to-br from-slate-900 to-gray-900 h-full">
                     {/* Header */}
                     <div className="flex items-center gap-2 mb-4">
-                      <div className="bg-gradient-to-br from-emerald-500 to-teal-600 p-2 rounded-lg shadow-lg shadow-emerald-500/25">
+                      <div className="bg-gradient-to-br from-emerald-500 to-teal-600 p-2 rounded-lg shadow-lg shadow-emerald-500/20">
                         <ChefHat className="w-5 h-5 text-white" />
                       </div>
                       <div>
@@ -238,21 +239,21 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onAuthClick }) 
                     </div>
 
                     {/* Search Box */}
-                    <div className="bg-slate-700/50 backdrop-blur-sm rounded-xl p-3 shadow-lg border border-slate-600/50">
+                    <div className="bg-slate-800/60 backdrop-blur-sm rounded-xl p-3 shadow-lg border border-slate-700/40">
                       <div className="text-sm font-medium text-slate-300 mb-2">Your Ingredients:</div>
                       <div className="flex flex-wrap gap-1 mb-3">
                         <span className="bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full text-xs border border-emerald-500/30">chicken</span>
                         <span className="bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full text-xs border border-emerald-500/30">rice</span>
                         <span className="bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full text-xs border border-emerald-500/30">onion</span>
                       </div>
-                      <div className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-center py-2 rounded-lg text-sm font-medium shadow-lg shadow-emerald-500/25">
+                      <div className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-center py-2 rounded-lg text-sm font-medium shadow-lg shadow-emerald-500/20">
                         Find Recipes
                       </div>
                     </div>
 
                     {/* Recipe Cards */}
                     <div className="space-y-3">
-                      <div className="bg-slate-700/50 backdrop-blur-sm rounded-xl p-3 shadow-lg border border-slate-600/50">
+                      <div className="bg-slate-800/60 backdrop-blur-sm rounded-xl p-3 shadow-lg border border-slate-700/40">
                         <img
                           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjDoJDYLZa2PeXjl8xXPndDxSoJZfFCg7TCw&s"
                           alt="Chicken Fried Rice"
@@ -265,7 +266,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onAuthClick }) 
                         </div>
                       </div>
                       
-                      <div className="bg-slate-700/50 backdrop-blur-sm rounded-xl p-3 shadow-lg border border-slate-600/50">
+                      <div className="bg-slate-800/60 backdrop-blur-sm rounded-xl p-3 shadow-lg border border-slate-700/40">
                         <img
                           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-gxgQ9EciwS8hwiDnyk4DR5GQyozkHxOxkQ&s"
                           alt="Chicken Curry"
@@ -284,7 +285,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onAuthClick }) 
 
               {/* Floating Elements */}
               <motion.div
-                className="absolute -top-4 -left-4 bg-slate-800/80 backdrop-blur-sm p-3 rounded-xl shadow-lg shadow-slate-900/50 border border-slate-700"
+                className="absolute -top-4 -left-4 bg-slate-800/70 backdrop-blur-sm p-3 rounded-xl shadow-lg shadow-slate-900/40 border border-slate-700/50"
                 animate={{ 
                   rotate: [0, 5, -5, 0],
                   scale: [1, 1.1, 1]
@@ -299,7 +300,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onAuthClick }) 
               </motion.div>
 
               <motion.div
-                className="absolute -bottom-4 -right-4 bg-slate-800/80 backdrop-blur-sm p-3 rounded-xl shadow-lg shadow-slate-900/50 border border-slate-700"
+                className="absolute -bottom-4 -right-4 bg-slate-800/70 backdrop-blur-sm p-3 rounded-xl shadow-lg shadow-slate-900/40 border border-slate-700/50"
                 animate={{ 
                   rotate: [0, -5, 5, 0],
                   scale: [1, 1.1, 1]
@@ -314,7 +315,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onAuthClick }) 
               </motion.div>
 
               <motion.div
-                className="absolute top-1/2 -right-8 bg-slate-800/80 backdrop-blur-sm p-2 rounded-full shadow-lg shadow-slate-900/50 border border-slate-700"
+                className="absolute top-1/2 -right-8 bg-slate-800/70 backdrop-blur-sm p-2 rounded-full shadow-lg shadow-slate-900/40 border border-slate-700/50"
                 animate={{ 
                   y: [-10, 10, -10],
                   x: [-5, 5, -5]
