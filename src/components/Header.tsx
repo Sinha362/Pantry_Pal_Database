@@ -13,7 +13,7 @@ const Header: React.FC = () => {
             <h1 className="text-4xl font-bold">Pantry Pal</h1>
             <p className="text-emerald-100 text-sm flex items-center gap-1">
               <Lightbulb className="w-4 h-4" />
-              Use only what you have - no shopping required!
+              Your Everyday Cooking Companion!
             </p>
           </div>
         </div>

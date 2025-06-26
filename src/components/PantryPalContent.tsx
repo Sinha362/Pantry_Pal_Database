@@ -242,7 +242,7 @@ const PantryPalContent: React.FC<PantryPalContentProps> = ({ setCurrentView, onN
       <footer className="bg-gray-800 text-white py-8">
         <div className="container mx-auto px-4 text-center">
           <p className="text-gray-300">
-            &copy; 2025 Pantry Pal. Make the most of what you have - no waste, no shopping trips!
+            &copy; 2025 Pantry Pal. Make the Most of What You Have – Smarter Meals, Less Waste!
           </p>
         </div>
       </footer>

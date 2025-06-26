@@ -45,7 +45,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onAuthClick }) 
   const features = [
     {
       icon: Search,
-      title: "AI-Powered Recipe Search",
+      title: "Ingredient-Based Recipe Finder",
       description: "Find recipes based on ingredients you already have at home"
     },
     {
@@ -60,8 +60,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onAuthClick }) 
     },
     {
       icon: Clock,
-      title: "No Shopping Required",
-      description: "Cook with what you have - reduce waste and save time"
+      title: "Cook More, Shop Less",
+      description: "Start with what you have — we'll show you what's possible"
     }
   ];
 
@@ -88,7 +88,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onAuthClick }) 
               <h1 className="text-2xl font-bold text-gray-800">Pantry Pal</h1>
               <p className="text-sm text-emerald-600 flex items-center gap-1">
                 <Lightbulb className="w-3 h-3" />
-                Your AI Recipe Assistant
+                Your Everyday Cooking Companion!
               </p>
             </div>
           </motion.div>
@@ -121,22 +121,22 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onAuthClick }) 
                 className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 px-4 py-2 rounded-full text-sm font-medium"
               >
                 <Sparkles className="w-4 h-4" />
-                AI-Powered Recipe Discovery
+                Discover Recipes Based on Your Ingredients
               </motion.div>
 
               <motion.h2 
                 variants={itemVariants}
                 className="text-5xl lg:text-6xl font-bold text-gray-800 leading-tight"
               >
-                Cook with what you
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600"> have</span>
+                Turn your Pantry into
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600"> a recipe book</span>
               </motion.h2>
 
               <motion.p 
                 variants={itemVariants}
                 className="text-xl text-gray-600 leading-relaxed"
               >
-                Transform your available ingredients into delicious meals with our AI-powered recipe suggestions. No more food waste, no more shopping trips - just great cooking with what's already in your pantry.
+                Turn your available ingredients into meal possibilities. Our smart recipe matcher finds the best-fitting dishes from your kitchen and lets you know what else you might need—so you can cook smarter, waste less, and discover more.
               </motion.p>
             </div>
 
@@ -172,7 +172,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onAuthClick }) 
                 <div className="text-sm text-gray-600">Match Accuracy</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-emerald-600">Zero</div>
+                <div className="text-2xl font-bold text-emerald-600">Minimize</div>
                 <div className="text-sm text-gray-600">Food Waste</div>
               </div>
             </motion.div>
@@ -188,7 +188,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onAuthClick }) 
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1, duration: 0.6 }}
               >
-                Get Started Now
+                Get Started
                 <motion.div
                   animate={{ x: [0, 5, 0] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
@@ -202,7 +202,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onAuthClick }) 
           {/* Right Content - App Preview */}
           <motion.div 
             variants={itemVariants}
-            className="relative flex justify-center lg:justify-end"
+            className="relative flex justify-center lg:justify-end pr-4 lg:pr-14"
           >
             <motion.div
               variants={floatingVariants}
@@ -226,7 +226,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onAuthClick }) 
                       </div>
                       <div>
                         <div className="font-bold text-gray-800">Pantry Pal</div>
-                        <div className="text-xs text-emerald-600">Recipe Assistant</div>
+                        <div className="text-xs text-emerald-600">Your Recipe Companion</div>
                       </div>
                     </div>
 
@@ -246,7 +246,12 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onAuthClick }) 
                     {/* Recipe Cards */}
                     <div className="space-y-3">
                       <div className="bg-white rounded-xl p-3 shadow-sm">
-                        <div className="w-full h-20 bg-gradient-to-r from-orange-200 to-red-200 rounded-lg mb-2"></div>
+                        <img
+                          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjDoJDYLZa2PeXjl8xXPndDxSoJZfFCg7TCw&s"
+                          alt="Chicken Fried Rice"
+                          className="w-full h-20 object-cover rounded-lg mb-2"
+                        />
+
                         <div className="font-medium text-sm text-gray-800">Chicken Fried Rice</div>
                         <div className="text-xs text-gray-600">95% Match</div>
                         <div className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs inline-block mt-1">
@@ -255,7 +260,12 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onAuthClick }) 
                       </div>
                       
                       <div className="bg-white rounded-xl p-3 shadow-sm">
-                        <div className="w-full h-20 bg-gradient-to-r from-yellow-200 to-orange-200 rounded-lg mb-2"></div>
+                        <img
+                          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-gxgQ9EciwS8hwiDnyk4DR5GQyozkHxOxkQ&s"
+                          alt="Chicken Curry"
+                          className="w-full h-20 object-cover rounded-lg mb-2"
+                        />
+
                         <div className="font-medium text-sm text-gray-800">Chicken Curry</div>
                         <div className="text-xs text-gray-600">87% Match</div>
                         <div className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs inline-block mt-1">
