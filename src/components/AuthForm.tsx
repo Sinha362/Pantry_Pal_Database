@@ -56,13 +56,13 @@ const AuthForm: React.FC<AuthFormProps> = ({ onBack }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-slate-900 to-indigo-900 px-4 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-slate-900 to-indigo-900 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Ambient Background Effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-emerald-500/8 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-80 h-80 bg-violet-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-cyan-500/8 rounded-full blur-3xl animate-pulse delay-2000"></div>
-        <div className="absolute top-1/3 right-1/3 w-72 h-72 bg-indigo-500/6 rounded-full blur-3xl animate-pulse delay-3000"></div>
+        <div className="absolute top-10 sm:top-20 left-5 sm:left-10 w-48 sm:w-96 h-48 sm:h-96 bg-emerald-500/8 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-10 sm:bottom-20 right-5 sm:right-10 w-40 sm:w-80 h-40 sm:h-80 bg-violet-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/4 w-32 sm:w-64 h-32 sm:h-64 bg-cyan-500/8 rounded-full blur-3xl animate-pulse delay-2000"></div>
+        <div className="absolute top-1/3 right-1/3 w-36 sm:w-72 h-36 sm:h-72 bg-indigo-500/6 rounded-full blur-3xl animate-pulse delay-3000"></div>
       </div>
 
       <motion.div
@@ -75,28 +75,28 @@ const AuthForm: React.FC<AuthFormProps> = ({ onBack }) => {
         {onBack && (
           <motion.button
             onClick={onBack}
-            className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 font-medium mb-6 transition-colors"
+            className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 font-medium mb-4 sm:mb-6 transition-colors"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <ArrowLeft className="w-5 h-5" />
-            Back to Home
+            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+            <span className="text-sm sm:text-base">Back to Home</span>
           </motion.button>
         )}
 
         {/* Logo and Title */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-6 sm:mb-8">
           <motion.div
             initial={{ scale: 0.8 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.5 }}
-            className="bg-gradient-to-br from-emerald-500 to-teal-600 p-4 rounded-full w-20 h-20 mx-auto mb-4 shadow-lg shadow-emerald-500/20"
+            className="bg-gradient-to-br from-emerald-500 to-teal-600 p-3 sm:p-4 rounded-full w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 sm:mb-4 shadow-lg shadow-emerald-500/20"
           >
-            <ChefHat className="w-12 h-12 text-white" />
+            <ChefHat className="w-10 h-10 sm:w-12 sm:h-12 text-white" />
           </motion.div>
-          <h1 className="text-3xl font-bold text-white mb-2">Pantry Pal</h1>
-          <p className="text-slate-400">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Pantry Pal</h1>
+          <p className="text-slate-400 text-sm sm:text-base px-4">
             {isSignUp ? 'Create your account to get started' : 'Welcome back! Sign in to continue'}
           </p>
         </div>
@@ -104,31 +104,31 @@ const AuthForm: React.FC<AuthFormProps> = ({ onBack }) => {
         {/* Auth Form */}
         <motion.div
           layout
-          className="bg-slate-800/40 backdrop-blur-md rounded-2xl shadow-xl p-8 border border-slate-700/50"
+          className="bg-slate-800/40 backdrop-blur-md rounded-2xl shadow-xl p-6 sm:p-8 border border-slate-700/50"
         >
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
             {/* Full Name Field (Sign Up Only) */}
             <motion.div
               initial={false}
               animate={{ 
                 height: isSignUp ? 'auto' : 0,
                 opacity: isSignUp ? 1 : 0,
-                marginBottom: isSignUp ? '1.5rem' : 0
+                marginBottom: isSignUp ? '1rem' : 0
               }}
               transition={{ duration: 0.3 }}
-              className="overflow-hidden"
+              className="overflow-hidden sm:mb-6"
             >
               <label htmlFor="fullName" className="block text-sm font-medium text-slate-300 mb-2">
                 Full Name
               </label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500 w-5 h-5" />
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500 w-4 h-4 sm:w-5 sm:h-5" />
                 <input
                   id="fullName"
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-slate-700/40 border border-slate-600/50 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-colors text-white placeholder-slate-400"
+                  className="w-full pl-9 sm:pl-10 pr-4 py-2.5 sm:py-3 bg-slate-700/40 border border-slate-600/50 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-colors text-white placeholder-slate-400 text-sm sm:text-base"
                   placeholder="Enter your full name"
                   required={isSignUp}
                 />
@@ -141,13 +141,13 @@ const AuthForm: React.FC<AuthFormProps> = ({ onBack }) => {
                 Email Address
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500 w-5 h-5" />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500 w-4 h-4 sm:w-5 sm:h-5" />
                 <input
                   id="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-slate-700/40 border border-slate-600/50 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-colors text-white placeholder-slate-400"
+                  className="w-full pl-9 sm:pl-10 pr-4 py-2.5 sm:py-3 bg-slate-700/40 border border-slate-600/50 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-colors text-white placeholder-slate-400 text-sm sm:text-base"
                   placeholder="Enter your email"
                   required
                 />
@@ -160,13 +160,13 @@ const AuthForm: React.FC<AuthFormProps> = ({ onBack }) => {
                 Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500 w-5 h-5" />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500 w-4 h-4 sm:w-5 sm:h-5" />
                 <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-12 py-3 bg-slate-700/40 border border-slate-600/50 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-colors text-white placeholder-slate-400"
+                  className="w-full pl-9 sm:pl-10 pr-10 sm:pr-12 py-2.5 sm:py-3 bg-slate-700/40 border border-slate-600/50 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-colors text-white placeholder-slate-400 text-sm sm:text-base"
                   placeholder="Enter your password"
                   required
                   minLength={6}
@@ -176,7 +176,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onBack }) => {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-500 hover:text-slate-300"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? <EyeOff className="w-4 h-4 sm:w-5 sm:h-5" /> : <Eye className="w-4 h-4 sm:w-5 sm:h-5" />}
                 </button>
               </div>
               {isSignUp && (
@@ -189,10 +189,10 @@ const AuthForm: React.FC<AuthFormProps> = ({ onBack }) => {
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-red-500/15 border border-red-500/25 rounded-lg p-3 flex items-center gap-2"
+                className="bg-red-500/15 border border-red-500/25 rounded-lg p-3 flex items-start gap-2"
               >
-                <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
-                <p className="text-red-300 text-sm">{error}</p>
+                <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+                <p className="text-red-300 text-sm leading-relaxed">{error}</p>
               </motion.div>
             )}
 
@@ -200,12 +200,14 @@ const AuthForm: React.FC<AuthFormProps> = ({ onBack }) => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 disabled:from-slate-600 disabled:to-slate-700 text-white py-3 px-4 rounded-lg font-medium transition-all duration-200 transform hover:-translate-y-0.5 disabled:transform-none disabled:cursor-not-allowed shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30"
+              className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 disabled:from-slate-600 disabled:to-slate-700 text-white py-2.5 sm:py-3 px-4 rounded-lg font-medium transition-all duration-200 transform hover:-translate-y-0.5 disabled:transform-none disabled:cursor-not-allowed shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 text-sm sm:text-base"
             >
               {loading ? (
                 <div className="flex items-center justify-center gap-2">
                   <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  {isSignUp ? 'Creating Account...' : 'Signing In...'}
+                  <span className="text-sm sm:text-base">
+                    {isSignUp ? 'Creating Account...' : 'Signing In...'}
+                  </span>
                 </div>
               ) : (
                 isSignUp ? 'Create Account' : 'Sign In'
@@ -214,8 +216,8 @@ const AuthForm: React.FC<AuthFormProps> = ({ onBack }) => {
           </form>
 
           {/* Toggle Mode */}
-          <div className="mt-6 text-center">
-            <p className="text-slate-400">
+          <div className="mt-4 sm:mt-6 text-center">
+            <p className="text-slate-400 text-sm sm:text-base">
               {isSignUp ? 'Already have an account?' : "Don't have an account?"}
               <button
                 type="button"
@@ -229,7 +231,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onBack }) => {
         </motion.div>
 
         {/* Footer */}
-        <p className="text-center text-slate-500 text-sm mt-6">
+        <p className="text-center text-slate-500 text-xs sm:text-sm mt-4 sm:mt-6 px-4">
           By continuing, you agree to our Terms of Service and Privacy Policy
         </p>
       </motion.div>

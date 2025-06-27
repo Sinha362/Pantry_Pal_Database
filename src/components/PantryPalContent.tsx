@@ -160,20 +160,20 @@ const PantryPalContent: React.FC<PantryPalContentProps> = ({ setCurrentView, onN
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-900 via-gray-900 to-slate-900 relative overflow-hidden">
       {/* Ambient Background Effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-emerald-500/8 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-80 h-80 bg-violet-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-cyan-500/8 rounded-full blur-3xl animate-pulse delay-2000"></div>
-        <div className="absolute top-1/3 right-1/3 w-72 h-72 bg-orange-500/6 rounded-full blur-3xl animate-pulse delay-3000"></div>
+        <div className="absolute top-10 sm:top-20 left-5 sm:left-10 w-48 sm:w-96 h-48 sm:h-96 bg-emerald-500/8 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-10 sm:bottom-20 right-5 sm:right-10 w-40 sm:w-80 h-40 sm:h-80 bg-violet-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/4 w-32 sm:w-64 h-32 sm:h-64 bg-cyan-500/8 rounded-full blur-3xl animate-pulse delay-2000"></div>
+        <div className="absolute top-1/3 right-1/3 w-36 sm:w-72 h-36 sm:h-72 bg-orange-500/6 rounded-full blur-3xl animate-pulse delay-3000"></div>
       </div>
 
       {/* User Menu */}
-      <div className="absolute top-4 right-4 z-40">
+      <div className="absolute top-3 sm:top-4 right-3 sm:right-4 z-40">
         <div className="relative">
           <button
             onClick={() => setShowUserMenu(!showUserMenu)}
-            className="bg-slate-800/60 backdrop-blur-sm rounded-full p-3 shadow-lg shadow-slate-900/30 hover:shadow-xl transition-all duration-200 border border-slate-700/50 hover:border-emerald-500/40"
+            className="bg-slate-800/60 backdrop-blur-sm rounded-full p-2 sm:p-3 shadow-lg shadow-slate-900/30 hover:shadow-xl transition-all duration-200 border border-slate-700/50 hover:border-emerald-500/40"
           >
-            <User className="w-5 h-5 text-emerald-400" />
+            <User className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
           </button>
           
           <AnimatePresence>
@@ -183,26 +183,26 @@ const PantryPalContent: React.FC<PantryPalContentProps> = ({ setCurrentView, onN
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: -10 }}
                 transition={{ duration: 0.2 }}
-                className="absolute right-0 mt-2 w-64 bg-slate-800/80 backdrop-blur-md rounded-xl shadow-xl border border-slate-700/50 py-2"
+                className="absolute right-0 mt-2 w-56 sm:w-64 bg-slate-800/80 backdrop-blur-md rounded-xl shadow-xl border border-slate-700/50 py-2"
               >
-                <div className="px-4 py-3 border-b border-slate-700/50">
-                  <p className="text-sm font-medium text-white">
+                <div className="px-3 sm:px-4 py-2 sm:py-3 border-b border-slate-700/50">
+                  <p className="text-sm font-medium text-white truncate">
                     {profile?.full_name || 'User'}
                   </p>
-                  <p className="text-xs text-slate-400">{user?.email}</p>
+                  <p className="text-xs text-slate-400 truncate">{user?.email}</p>
                 </div>
                 <button
                   onClick={onNavigateToBookmarks}
-                  className="w-full px-4 py-2 text-left text-sm text-emerald-400 hover:bg-slate-700/50 flex items-center gap-2 transition-colors border-b border-slate-700/50"
+                  className="w-full px-3 sm:px-4 py-2 text-left text-sm text-emerald-400 hover:bg-slate-700/50 flex items-center gap-2 transition-colors border-b border-slate-700/50"
                 >
-                  <User className="w-4 h-4" />
+                  <User className="w-3 h-3 sm:w-4 sm:h-4" />
                   My Bookmarks
                 </button>
                 <button
                   onClick={handleSignOut}
-                  className="w-full px-4 py-2 text-left text-sm text-red-400 hover:bg-slate-700/50 flex items-center gap-2 transition-colors"
+                  className="w-full px-3 sm:px-4 py-2 text-left text-sm text-red-400 hover:bg-slate-700/50 flex items-center gap-2 transition-colors"
                 >
-                  <LogOut className="w-4 h-4" />
+                  <LogOut className="w-3 h-3 sm:w-4 sm:h-4" />
                   Sign Out
                 </button>
               </motion.div>
@@ -212,7 +212,7 @@ const PantryPalContent: React.FC<PantryPalContentProps> = ({ setCurrentView, onN
       </div>
 
       <Header />
-      <main className="flex-grow container mx-auto px-4 py-8 relative z-10">
+      <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -231,25 +231,25 @@ const PantryPalContent: React.FC<PantryPalContentProps> = ({ setCurrentView, onN
         )}
 
         {error && (
-          <div className="bg-red-500/15 border border-red-500/25 rounded-xl p-6 mb-8 backdrop-blur-sm">
+          <div className="bg-red-500/15 border border-red-500/25 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8 backdrop-blur-sm mx-4 sm:mx-0">
             <div className="flex items-center gap-2 text-red-300 mb-2">
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
                 <path
                   fillRule="evenodd"
                   d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="font-medium">Error</span>
+              <span className="font-medium text-sm sm:text-base">Error</span>
             </div>
-            <p className="text-red-300">{error}</p>
+            <p className="text-red-300 text-sm sm:text-base">{error}</p>
           </div>
         )}
       </main>
 
-      <footer className="bg-gray-900 text-white py-8 border-t border-slate-800/50 relative z-10">
-        <div className="container mx-auto px-4 text-center">
-          <p className="text-slate-400">
+      <footer className="bg-gray-900 text-white py-6 sm:py-8 border-t border-slate-800/50 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-slate-400 text-xs sm:text-sm">
             &copy; 2025 Pantry Pal. Make the Most of What You Have – Smarter Meals, Less Waste!
           </p>
         </div>
@@ -263,14 +263,14 @@ const PantryPalContent: React.FC<PantryPalContentProps> = ({ setCurrentView, onN
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 70, damping: 15 }}
-            className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm px-4"
+            className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm p-2 sm:p-4"
           >
-            <div className="bg-slate-800/80 backdrop-blur-md rounded-3xl shadow-2xl p-8 max-w-5xl w-full max-h-[90vh] overflow-y-auto border border-slate-700/50 relative">
+            <div className="bg-slate-800/80 backdrop-blur-md rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 lg:p-8 max-w-7xl w-full max-h-[90vh] overflow-y-auto border border-slate-700/50 relative">
               <button
-                className="absolute top-4 right-4 text-slate-400 hover:text-white"
+                className="absolute top-3 sm:top-4 right-3 sm:right-4 text-slate-400 hover:text-white z-10"
                 onClick={() => setShowOverlay(false)}
               >
-                <X className="w-6 h-6" />
+                <X className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
 
               <RecipeGrid

@@ -60,32 +60,32 @@ const RecipeModal: React.FC<RecipeModalProps> = ({
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 z-50">
       <div className="bg-slate-800/70 backdrop-blur-md rounded-xl w-full max-w-6xl max-h-[90vh] overflow-y-auto border border-slate-700/50 p-2 sm:p-4">
-        <div className="sticky top-0 bg-slate-800/90 backdrop-blur-md border-b border-slate-700/50 px-4 sm:px-6 py-4 flex items-center justify-between gap-4 z-10">
-          <h2 className="text-xl sm:text-2xl font-bold text-white truncate max-w-[65%] sm:max-w-[75%]">
+        <div className="sticky top-0 bg-slate-800/90 backdrop-blur-md border-b border-slate-700/50 px-3 sm:px-4 lg:px-6 py-3 sm:py-4 flex items-center justify-between gap-2 sm:gap-4 z-10 rounded-t-xl">
+          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-white truncate flex-1 pr-2">
             {recipe.title}
           </h2>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
             <button
               onClick={handleBookmarkClick}
-              className={`p-2 rounded-full transition-all duration-200 overflow-hidden ${
+              className={`p-1.5 sm:p-2 rounded-full transition-all duration-200 overflow-hidden ${
                 isBookmarked
                   ? 'bg-yellow-500/80 text-white hover:bg-yellow-600/80 shadow-lg shadow-yellow-500/20'
                   : 'bg-slate-700/40 text-slate-400 hover:bg-slate-600/40 hover:text-yellow-400'
               }`}
             >
-              {isBookmarked ? <BookmarkCheck className="w-5 h-5" /> : <Bookmark className="w-5 h-5" />}
+              {isBookmarked ? <BookmarkCheck className="w-4 h-4 sm:w-5 sm:h-5" /> : <Bookmark className="w-4 h-4 sm:w-5 sm:h-5" />}
             </button>
             <button
               onClick={onClose}
-              className="p-2 rounded-full transition-colors text-slate-400 hover:bg-slate-700/40 hover:text-white overflow-hidden"
+              className="p-1.5 sm:p-2 rounded-full transition-colors text-slate-400 hover:bg-slate-700/40 hover:text-white overflow-hidden"
             >
-              <X className="w-6 h-6" />
+              <X className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
           </div>
         </div>
 
-        <div className="px-4 sm:px-6 pb-6 pt-28 sm:pt-32">
-          <div className="grid md:grid-cols-2 gap-6 mb-6">
+        <div className="px-3 sm:px-4 lg:px-6 pb-4 sm:pb-6 pt-4 sm:pt-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
             <div>
               {recipe.image && !imageError ? (
                 <img
@@ -93,22 +93,22 @@ const RecipeModal: React.FC<RecipeModalProps> = ({
                   alt={recipe.title}
                   onError={handleImageError}
                   loading="lazy"
-                  className="w-full h-64 object-cover rounded-lg"
+                  className="w-full h-48 sm:h-64 object-cover rounded-lg"
                 />
               ) : (
-                <div className="w-full h-64 bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-lg flex items-center justify-center">
+                <div className="w-full h-48 sm:h-64 bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-lg flex items-center justify-center">
                   <div className="text-center">
-                    <Target className="w-16 h-16 sm:w-20 sm:h-20 text-emerald-400 mx-auto mb-3" />
-                    <p className="text-emerald-400 font-medium text-lg">{recipe.category}</p>
+                    <Target className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 text-emerald-400 mx-auto mb-3" />
+                    <p className="text-emerald-400 font-medium text-base sm:text-lg">{recipe.category}</p>
                   </div>
                 </div>
               )}
             </div>
 
-            <div className="space-y-4">
-              <div className="flex flex-wrap items-center gap-3 text-sm text-slate-400">
+            <div className="space-y-3 sm:space-y-4">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm text-slate-400">
                 <div className="flex items-center gap-1">
-                  <Tag className="w-4 h-4" />
+                  <Tag className="w-3 h-3 sm:w-4 sm:h-4" />
                   <span>{recipe.category}</span>
                 </div>
                 <div className="flex items-center gap-1">
@@ -116,24 +116,24 @@ const RecipeModal: React.FC<RecipeModalProps> = ({
                 </div>
               </div>
 
-              <div className="p-4 bg-slate-700/30 rounded-lg border border-slate-600/40">
+              <div className="p-3 sm:p-4 bg-slate-700/30 rounded-lg border border-slate-600/40">
                 <span
-                  className={`inline-block px-3 py-1 rounded-full text-sm font-medium border ${getSimilarityColor(
+                  className={`inline-block px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium border ${getSimilarityColor(
                     recipe.similarityScore
                   )}`}
                 >
                   {recipe.similarityScore}% Similarity Match
                 </span>
-                <p className="text-sm text-slate-400 mt-2">
+                <p className="text-xs sm:text-sm text-slate-400 mt-2">
                   This recipe matches {recipe.similarityScore}% of your available ingredients.
                 </p>
               </div>
 
               {isBookmarked && (
-                <div className="p-3 bg-yellow-500/15 border border-yellow-500/25 rounded-lg">
+                <div className="p-2.5 sm:p-3 bg-yellow-500/15 border border-yellow-500/25 rounded-lg">
                   <div className="flex items-center gap-2 text-yellow-300">
-                    <BookmarkCheck className="w-4 h-4" />
-                    <span className="text-sm font-medium">Recipe Bookmarked</span>
+                    <BookmarkCheck className="w-3 h-3 sm:w-4 sm:h-4" />
+                    <span className="text-xs sm:text-sm font-medium">Recipe Bookmarked</span>
                   </div>
                   <p className="text-xs text-yellow-400 mt-1">
                     This recipe has been saved to your bookmarks
@@ -143,10 +143,10 @@ const RecipeModal: React.FC<RecipeModalProps> = ({
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             <div>
-              <h3 className="text-xl font-bold text-white mb-4">Ingredients</h3>
-              <ul className="space-y-2">
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">Ingredients</h3>
+              <ul className="space-y-1.5 sm:space-y-2">
                 {recipe.ingredients.map((ingredient, index) => {
                   const hasIngredient = availableIngredients.some(
                     (available) =>
@@ -155,14 +155,14 @@ const RecipeModal: React.FC<RecipeModalProps> = ({
                   );
 
                   return (
-                    <li key={index} className="flex items-center gap-2">
+                    <li key={index} className="flex items-start gap-2">
                       {hasIngredient ? (
-                        <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />
+                        <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-green-400 flex-shrink-0 mt-0.5" />
                       ) : (
-                        <AlertCircle className="w-4 h-4 text-orange-400 flex-shrink-0" />
+                        <AlertCircle className="w-3 h-3 sm:w-4 sm:h-4 text-orange-400 flex-shrink-0 mt-0.5" />
                       )}
                       <span
-                        className={`capitalize ${
+                        className={`capitalize text-xs sm:text-sm leading-relaxed ${
                           hasIngredient ? 'text-slate-300' : 'text-orange-400'
                         }`}
                       >
@@ -174,28 +174,28 @@ const RecipeModal: React.FC<RecipeModalProps> = ({
               </ul>
 
               {missingIngredients.length > 0 && (
-                <div className="mt-4 p-3 bg-orange-500/15 border border-orange-500/25 rounded-lg">
-                  <p className="font-medium text-orange-300 mb-1">Missing Ingredients:</p>
-                  <p className="text-sm text-orange-400">{missingIngredients.join(', ')}</p>
+                <div className="mt-3 sm:mt-4 p-2.5 sm:p-3 bg-orange-500/15 border border-orange-500/25 rounded-lg">
+                  <p className="font-medium text-orange-300 mb-1 text-sm">Missing Ingredients:</p>
+                  <p className="text-xs sm:text-sm text-orange-400">{missingIngredients.join(', ')}</p>
                 </div>
               )}
             </div>
 
             <div>
-              <h3 className="text-xl font-bold text-white mb-4">Instructions</h3>
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">Instructions</h3>
               {instructions.length > 0 ? (
-                <ol className="space-y-4">
+                <ol className="space-y-3 sm:space-y-4">
                   {instructions.map((instruction: string, index: number) => (
-                    <li key={index} className="flex gap-4 items-start">
-                      <span className="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-lg rounded-full flex items-center justify-center font-bold">
+                    <li key={index} className="flex gap-3 sm:gap-4 items-start">
+                      <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-sm sm:text-lg rounded-full flex items-center justify-center font-bold">
                         {index + 1}
                       </span>
-                      <p className="text-slate-300 leading-relaxed">{instruction}</p>
+                      <p className="text-slate-300 leading-relaxed text-xs sm:text-sm">{instruction}</p>
                     </li>
                   ))}
                 </ol>
               ) : (
-                <p className="text-slate-500">No instructions available for this recipe.</p>
+                <p className="text-slate-500 text-sm">No instructions available for this recipe.</p>
               )}
             </div>
           </div>

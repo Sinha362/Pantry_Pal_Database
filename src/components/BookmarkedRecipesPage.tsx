@@ -44,32 +44,33 @@ const BookmarkedRecipesPage: React.FC<BookmarkedRecipesPageProps> = ({ setCurren
   }, [user]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-indigo-900 p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-indigo-900 p-4 sm:p-6 lg:p-8 relative overflow-hidden">
       {/* Ambient Background Effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-emerald-500/8 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-80 h-80 bg-violet-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-cyan-500/8 rounded-full blur-3xl animate-pulse delay-2000"></div>
-        <div className="absolute top-1/3 right-1/3 w-72 h-72 bg-pink-500/6 rounded-full blur-3xl animate-pulse delay-3000"></div>
+        <div className="absolute top-10 sm:top-20 left-5 sm:left-10 w-48 sm:w-96 h-48 sm:h-96 bg-emerald-500/8 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-10 sm:bottom-20 right-5 sm:right-10 w-40 sm:w-80 h-40 sm:h-80 bg-violet-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/4 w-32 sm:w-64 h-32 sm:h-64 bg-cyan-500/8 rounded-full blur-3xl animate-pulse delay-2000"></div>
+        <div className="absolute top-1/3 right-1/3 w-36 sm:w-72 h-36 sm:h-72 bg-pink-500/6 rounded-full blur-3xl animate-pulse delay-3000"></div>
       </div>
 
-      <div className="max-w-4xl mx-auto relative z-10">
-        <div className="flex items-center justify-between mb-8">
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-8 gap-4">
           <button
-            className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 font-medium transition-colors"
+            className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 font-medium transition-colors order-1 sm:order-none"
             onClick={() => setCurrentView('pantryPal')}
             aria-label="Back to Pantry Pal"
           >
-            <ArrowLeft className="w-5 h-5" />
-            Back to Pantry Pal
+            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+            <span className="text-sm sm:text-base">Back to Pantry Pal</span>
           </button>
-          <h1 className="text-3xl font-bold text-center flex items-center justify-center text-white">
-            <Heart className="w-8 h-8 text-red-400 mr-2" />
-            Bookmarked Recipes
+          <h1 className="text-2xl sm:text-3xl font-bold text-center flex items-center justify-center text-white order-2 sm:order-none flex-1 sm:flex-none">
+            <Heart className="w-6 h-6 sm:w-8 sm:h-8 text-red-400 mr-2" />
+            <span className="hidden xs:inline">Bookmarked Recipes</span>
+            <span className="xs:hidden">Bookmarks</span>
           </h1>
-          <div className="w-32" /> {/* Spacer for alignment */}
+          <div className="w-32 hidden sm:block" /> {/* Spacer for alignment */}
         </div>
-        {error && <p className="text-center text-red-400 mb-4">{error}</p>}
+        {error && <p className="text-center text-red-400 mb-4 text-sm sm:text-base px-4">{error}</p>}
         <RecipeGrid
           recipes={recipes}
           availableIngredients={[]}
